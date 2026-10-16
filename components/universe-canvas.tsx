@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import type * as ThreeTypes from "three";
 
 type SceneProps = { paused?: boolean };
 
@@ -138,12 +138,12 @@ const diskFragment = [
   "  float n2 = turbulence(vec2(angle * 8.0 - uTime * 0.045, r * 5.3 - uTime * 0.28));",
   "  float filament = pow(max(0.0, sin(angle * 27.0 + r * 8.2 + n1 * 5.5 + uTime * 0.08)), 3.4);",
   "  float turbulenceGlow = 0.22 + 0.66 * n1 + 0.42 * n2 + 0.26 * filament;",
-  "  float radialHeat = smoothstep(7.2, 2.05, r);",
+  "  float radialHeat = 1.0 - smoothstep(2.05, 7.2, r);",
   "  vec3 innerHot = vec3(1.8, 1.46, 1.04);",
   "  vec3 amber = vec3(1.35, 0.31, 0.075);",
   "  vec3 outerBlue = vec3(0.16, 0.36, 1.32);",
-  "  vec3 tint = mix(outerBlue, amber, smoothstep(7.1, 3.6, r));",
-  "  tint = mix(tint, innerHot, smoothstep(3.25, 2.0, r));",
+  "  vec3 tint = mix(outerBlue, amber, 1.0 - smoothstep(3.6, 7.1, r));",
+  "  tint = mix(tint, innerHot, 1.0 - smoothstep(2.0, 3.25, r));",
   "  tint = mix(tint, vec3(0.54, 0.82, 1.5), uBlueShift * 0.82);",
   "  float doppler = 0.56 + 0.95 * pow(0.5 + 0.5 * cos(angle - 0.45), 2.0);",
   "  float radialRim = exp(-pow((r - 2.32) / 0.34, 2.0));",
@@ -164,12 +164,12 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
     let cancelled = false;
     let teardown = () => {};
 
-    void Promise.resolve().then(() => {
+    void import("three").then((THREE) => {
       const host = hostRef.current;
       if (cancelled || !host) return;
 
-      let renderer: THREE.WebGLRenderer | null = null;
-      let scene: THREE.Scene | null = null;
+      let renderer: ThreeTypes.WebGLRenderer | null = null;
+      let scene: ThreeTypes.Scene | null = null;
       let observer: ResizeObserver | null = null;
       let skyDome: THREE.Mesh | null = null;
       let skyMaterial: THREE.ShaderMaterial | null = null;
@@ -657,7 +657,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           observer?.disconnect();
           renderer?.setAnimationLoop(null);
           scene?.traverse((object) => {
-            const obj = object as THREE.Object3D & { geometry?: THREE.BufferGeometry; material?: THREE.Material | THREE.Material[] };
+            const obj = object as ThreeTypes.Object3D & { geometry?: ThreeTypes.BufferGeometry; material?: ThreeTypes.Material | ThreeTypes.Material[] };
             obj.geometry?.dispose();
             if (Array.isArray(obj.material)) obj.material.forEach((material) => material.dispose());
             else obj.material?.dispose();
@@ -672,6 +672,8 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
         renderer?.domElement.remove();
         host.dataset.engine = "fallback";
       }
+    }).catch(() => {
+      if (hostRef.current) hostRef.current.dataset.engine = "fallback";
     });
 
     return () => {
