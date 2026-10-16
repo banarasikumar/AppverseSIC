@@ -171,8 +171,8 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
       let renderer: ThreeTypes.WebGLRenderer | null = null;
       let scene: ThreeTypes.Scene | null = null;
       let observer: ResizeObserver | null = null;
-      let skyDome: THREE.Mesh | null = null;
-      let skyMaterial: THREE.ShaderMaterial | null = null;
+      let skyDome: ThreeTypes.Mesh | null = null;
+      let skyMaterial: ThreeTypes.ShaderMaterial | null = null;
       let scrollProgress = 0;
       const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
       const isCompact = window.innerWidth < 720;
@@ -360,7 +360,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           dust.rotation.copy(disk.rotation);
           system.add(dust);
 
-          return { system, diskMaterial, innerDiskMaterial: innerDisk.material as THREE.ShaderMaterial, photonRing, photonGlow, dust, horizon };
+          return { system, diskMaterial, innerDiskMaterial: innerDisk.material as ThreeTypes.ShaderMaterial, photonRing, photonGlow, dust, horizon };
         };
 
         // FIELD 01 — a black hole with a hot, turbulent accretion disk, photon ring and lens-warped stars.
