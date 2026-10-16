@@ -175,7 +175,7 @@ export default function UniverseCanvas({ paused = false }: { paused?: boolean })
             "  vColor = color;",
             "  vAlpha = clamp(1.12 - (-mvPosition.z / 100.0), 0.15, 1.0);",
             "}"
-          ].join("\\n"),
+          ].join("\n"),
           fragmentShader: [
             "precision highp float;",
             "varying vec3 vColor;",
@@ -188,7 +188,7 @@ export default function UniverseCanvas({ paused = false }: { paused?: boolean })
             "  if (alpha < 0.012) discard;",
             "  gl_FragColor = vec4(vColor, alpha);",
             "}"
-          ].join("\\n"),
+          ].join("\n"),
           transparent: true,
           depthWrite: false,
           blending: THREE.AdditiveBlending
