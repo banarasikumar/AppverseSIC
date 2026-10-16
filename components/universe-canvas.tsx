@@ -234,9 +234,9 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
         skyDome.frustumCulled = false;
         scene.add(skyDome);
 
-        const focusTargets: THREE.Object3D[] = [];
+        const focusTargets: ThreeTypes.Object3D[] = [];
 
-        const createBlackHole = (position: THREE.Vector3, blueShift: number, scale: number) => {
+        const createBlackHole = (position: ThreeTypes.Vector3, blueShift: number, scale: number) => {
           const system = new THREE.Group();
           system.position.copy(position);
           system.scale.setScalar(scale);
@@ -371,7 +371,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
         portal.position.set(0, 0, -29);
         scene.add(portal);
         focusTargets.push(portal);
-        const portalRings: THREE.Mesh[] = [];
+        const portalRings: ThreeTypes.Mesh[] = [];
         for (let i = 0; i < (weakDevice ? 8 : 13); i += 1) {
           const ring = new THREE.Mesh(
             new THREE.TorusGeometry(4.5 + Math.sin(i * 0.72) * 0.72, i % 4 === 0 ? 0.025 : 0.009, 8, 240),
@@ -402,7 +402,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
         scene.add(network);
         focusTargets.push(network);
         const nodeCount = weakDevice ? 25 : isCompact ? 38 : 72;
-        const nodePositions: THREE.Vector3[] = [];
+        const nodePositions: ThreeTypes.Vector3[] = [];
         const nodeGeometry = new THREE.SphereGeometry(0.055, 8, 8);
         const nodeMaterials = [
           new THREE.MeshBasicMaterial({ color: 0x9dffe2, toneMapped: false }),
@@ -493,7 +493,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           })
         );
         architecture.add(crystalInner);
-        const architectureRings: THREE.Mesh[] = [];
+        const architectureRings: ThreeTypes.Mesh[] = [];
         for (const [radius, tube, color, rot] of [
           [5.65, 0.012, 0x9bffe0, [1.02, 0.46, 0.12]],
           [6.4, 0.009, 0x758cff, [0.45, 1.15, 0.72]],
