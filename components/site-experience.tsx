@@ -114,26 +114,25 @@ export default function SiteExperience() {
           <div className="hero-gridlines" aria-hidden="true" />
           <div className="container hero-content">
             <div className="hero-copy">
-              <p className="eyebrow"><span className="eyebrow-dot" /> APPVERSE SUPERINTELLIGENCE <i>/</i> FIELD 001</p>
-              <h1 id="hero-title">A universe<br />of <em>intelligence.</em></h1>
-              <p className="hero-lede">The next frontier isn’t somewhere we go. It’s what we learn to build.</p>
-              <p className="hero-body">We’re creating a new universe of software — intelligent applications and digital experiences, imagined with curiosity and engineered for what comes next.</p>
+              <p className="eyebrow"><span className="eyebrow-dot" /> APPVERSE SUPERINTELLIGENCE <i>/</i> AN EXPLORATION OF WHAT COMES NEXT</p>
+              <h1 id="hero-title">Beyond the<br />known <em>universe.</em></h1>
+              <p className="hero-lede">We build at the edge of what software can become.</p>
+              <p className="hero-body">From intelligent applications to new digital experiences, we explore the space between what exists today and what becomes possible tomorrow.</p>
               <div className="hero-actions">
                 <a className="button button-solid" href="#frontier">Explore the frontier <Arrow /></a>
                 <a className="button button-quiet" href="#vision">Our point of view <Arrow diagonal /></a>
               </div>
-              <div className="hero-index"><span>01</span><i /> THINK BIGGER THAN THE INTERFACE</div>
+              <div className="hero-index"><span>01</span><i /> THE FUTURE IS NOT A FLAT SURFACE</div>
             </div>
-            <div className="scene-label scene-label--top"><span className="tiny-cross">+</span><span>LIVE ENVIRONMENT</span><b>AP / 001</b></div>
+            <div className="scene-label scene-label--top"><span className="tiny-cross">+</span><span>EVENT HORIZON</span><b>AP / 001</b></div>
             <div className="scene-hud">
-              <div className="hud-heading"><span className="hud-live" /><span>PARTICLE SYSTEM</span><b>ACTIVE</b></div>
-              <div className="hud-spectrum"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div>
-              <div className="hud-details"><div><span>RENDER</span><b>REAL-TIME / WEBGL</b></div><div><span>INPUT</span><b>POINTER + TOUCH</b></div></div>
-              <button className="scene-toggle" type="button" onClick={() => setScenePaused(!scenePaused)} aria-pressed={scenePaused}><span>{scenePaused ? "▶" : "Ⅱ"}</span>{scenePaused ? "RESUME MOTION" : "PAUSE MOTION"}</button>
+              <div className="hud-heading"><span className="hud-live" /><span>BLACK HOLE / ACCRETION DISK</span><b>LIVE 3D</b></div>
+              <p className="scene-caption">Light curves. Matter spirals. Space bends.</p>
+              <button className="scene-toggle" type="button" onClick={() => setScenePaused(!scenePaused)} aria-pressed={scenePaused}><span>{scenePaused ? "▶" : "Ⅱ"}</span>{scenePaused ? "RESUME MOVEMENT" : "PAUSE MOVEMENT"}</button>
             </div>
-            <div className="scene-label scene-label--left"><span>VISUALIZATION / 3D</span><i>↘</i></div>
+            <div className="scene-label scene-label--left"><span>GRAVITATIONAL LENSING</span><i>↘</i></div>
           </div>
-          <div className="container hero-footer-line"><span><i>✳</i> INDEPENDENT BY NATURE. FUTURE-FOCUSED BY DESIGN.</span><a href="#vision">SCROLL TO EXPLORE <b>↓</b></a><span className="refresh-note">FRAME PACING: DISPLAY-SYNCED</span></div>
+          <div className="container hero-footer-line"><span><i>✳</i> BUILT WITH CURIOSITY. DESIGNED FOR WHAT COMES NEXT.</span><a href="#vision">SCROLL TO DESCEND <b>↓</b></a><span className="refresh-note">FRAME PACING: DISPLAY-SYNCED</span></div>
         </section>
 
         <section className="vision section-pad" id="vision" data-reveal data-theme-color="#07110f" data-scene-accent="#9ff3d2">
@@ -141,7 +140,7 @@ export default function SiteExperience() {
             <div className="section-heading"><span><i>01</i> / THE POINT OF VIEW</span><span className="section-heading-right">A DIFFERENT SCALE OF THINKING</span></div>
             <div className="vision-main">
               <p className="micro-label">THINK IN UNIVERSES.</p>
-              <div><h2>Don’t just add<br />to the noise. <span>Change the signal.</span></h2><p className="section-copy">We believe the best technology starts with an unusually large question — and then earns its way toward an answer. AppverseSI exists to explore that space between today’s useful software and tomorrow’s more capable intelligence.</p><p className="section-copy">Not technology for spectacle alone. Not complexity for its own sake. Things that feel inevitable in hindsight because someone was curious enough to begin.</p></div>
+              <div><h2>Don’t just add<br />to the noise. <span>Change the signal.</span></h2><p className="section-copy">The most interesting questions are rarely the small ones. We are exploring how software can become more capable, more intuitive, and more human — while staying grounded in things that are genuinely useful.</p><p className="section-copy">The aim is not spectacle for its own sake. It is to make the extraordinary useful, and to build with enough care that the technology gets out of the way.</p></div>
             </div>
             <div className="vision-principles">
               <article className="principle"><div className="principle-top"><span>01 / CURIOSITY</span><b>↗</b></div><h3>Ask the bigger question.</h3><p>Look beyond what exists. Imagine what should exist, then work backward with discipline.</p><div className="principle-mark principle-mark--orbit"><i /><b /><em /></div></article>
@@ -154,11 +153,11 @@ export default function SiteExperience() {
         <section className="frontier section-pad" id="frontier" data-reveal data-theme-color="#07101a" data-scene-accent="#9bafff">
           <div className="container">
             <div className="section-heading"><span><i>02</i> / THE FRONTIER</span><span className="section-heading-right">THE NEXT CHAPTER IS FORMING</span></div>
-            <div className="frontier-intro"><div><p className="micro-label">IN FORMATION</p><h2>A new universe<br />is taking <span>shape.</span></h2></div><p className="section-copy">Our applications are being developed with the same conviction that defines the brand: take the long view, sweat the details, and make something worth putting into the world. We’ll reveal them when they’re ready.</p></div>
+            <div className="frontier-intro"><div><p className="micro-label">IN FORMATION</p><h2>A new universe<br />is taking <span>shape.</span></h2></div><p className="section-copy">A new generation of software should feel less like operating a machine and more like extending what a person can do. That is the direction we are working toward.</p></div>
             <div className="frontier-console">
-              <div className="console-top"><span><i /> DEVELOPMENT MATRIX</span><span>APVERSE / CONCEPTUAL FRAMEWORK</span><span>STATE: EVOLVING</span></div>
+              <div className="console-top"><span><i /> FIELDS OF EXPLORATION</span><span>INTELLIGENCE IN FORMATION</span><span>STATE: EVOLVING</span></div>
               <div className="console-body">
-                <div className="console-visual"><div className="console-rings"><i /><i /><i /><b /></div><div className="console-coordinate">FIELD / 02<br />INTELLIGENCE IN FORMATION</div><div className="console-bottom">NO PRODUCT ANNOUNCEMENTS YET <span>◇</span></div></div>
+                <div className="console-visual"><div className="console-rings"><i /><i /><i /><b /></div><div className="console-coordinate">FIELD / 02<br />INTELLIGENCE IN FORMATION</div><div className="console-bottom">NOTHING HERE IS STATIC <span>✳</span></div></div>
                 <div className="console-list">
                   <div className="console-list-head"><span>AREAS OF EXPLORATION</span><span>STATUS</span></div>
                   <article><div className="console-number">A / 01</div><div className="console-item-copy"><h3>Intelligent applications</h3><p>Software designed around new ways to think, create, and solve.</p></div><span className="status-pill"><i /> IN DEVELOPMENT</span></article>
@@ -173,7 +172,7 @@ export default function SiteExperience() {
 
         <section className="studio section-pad" id="studio" data-reveal data-theme-color="#08100f" data-scene-accent="#9ff3d2">
           <div className="container">
-            <div className="section-heading"><span><i>03</i> / THE STUDIO</span><span className="section-heading-right">SELECT PROJECTS / DIRECT COLLABORATION</span></div>
+            <div className="section-heading"><span><i>03</i> / THE STUDIO</span><span className="section-heading-right">CRAFT, ENGINEERING & COLLABORATION</span></div>
             <div className="studio-layout"><div className="studio-copy"><p className="micro-label">FOR PEOPLE BUILDING WHAT’S NEXT</p><h2>Big ambition.<br /><span>Grounded execution.</span></h2><p className="section-copy">While our own frontier expands, we work with select businesses to turn difficult digital problems into thoughtful, dependable software. Small-team focus, direct communication, and care in every detail.</p><a className="button button-outline" href="#contact">Discuss a project <Arrow diagonal /></a></div>
               <div className="studio-services"><article><span>01</span><div><h3>Websites with a point of view</h3><p>Distinctive digital experiences that make a brand feel unmistakably itself.</p></div><b>↗</b></article><article><span>02</span><div><h3>Custom web applications</h3><p>Useful, fast interfaces built around real workflows and real people.</p></div><b>↗</b></article><article><span>03</span><div><h3>Software engineering</h3><p>Careful implementation, strong foundations, and room to evolve.</p></div><b>↗</b></article><div className="studio-note"><i /> OPEN TO A SMALL NUMBER OF WELL-SUITED PROJECTS</div></div>
             </div>
