@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-export default function UniverseCanvas() {
+export default function UniverseCanvas({ paused = false }: { paused?: boolean }) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(paused);
+
+  useEffect(() => { pausedRef.current = paused; }, [paused]);
 
   useEffect(() => {
     let cancelled = false;
@@ -269,7 +272,7 @@ export default function UniverseCanvas() {
         const clock = new THREE.Clock();
         const frame = () => {
           if (!renderer) return;
-          if (document.hidden) return;
+          if (document.hidden || pausedRef.current) return;
           const t = clock.getElapsedTime();
           pointer.x += (pointer.targetX - pointer.x) * 0.035;
           pointer.y += (pointer.targetY - pointer.y) * 0.035;
