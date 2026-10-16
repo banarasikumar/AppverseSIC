@@ -19,6 +19,33 @@ export default function SiteExperience() {
   const [formState, setFormState] = useState<FormState>({ kind: "idle" });
 
   useEffect(() => {
+    const themedSections = Array.from(document.querySelectorAll<HTMLElement>("[data-theme-color]"));
+    const updateTheme = () => {
+      const activeLine = window.innerHeight * 0.38;
+      let active = themedSections[0];
+      themedSections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= activeLine) active = section;
+      });
+      if (!active) return;
+      const color = active.dataset.themeColor || "#05080b";
+      const accent = active.dataset.sceneAccent || "#b7f6dc";
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", color);
+      document.documentElement.style.backgroundColor = color;
+      document.documentElement.style.setProperty("--scene-accent", accent);
+      document.body.dataset.scene = active.id || "hero";
+    };
+    let themeFrame = 0;
+    const onScrollTheme = () => {
+      if (themeFrame) return;
+      themeFrame = window.requestAnimationFrame(() => {
+        themeFrame = 0;
+        updateTheme();
+      });
+    };
+    window.addEventListener("scroll", onScrollTheme, { passive: true });
+    window.addEventListener("resize", onScrollTheme, { passive: true });
+    updateTheme();
+
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
       nodes.forEach((node) => node.classList.add("is-visible"));
@@ -33,7 +60,12 @@ export default function SiteExperience() {
       });
     }, { threshold: 0.12 });
     nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScrollTheme);
+      window.removeEventListener("resize", onScrollTheme);
+      if (themeFrame) window.cancelAnimationFrame(themeFrame);
+    };
   }, []);
 
   async function submitInquiry(event: FormEvent<HTMLFormElement>) {
@@ -62,6 +94,7 @@ export default function SiteExperience() {
 
   return (
     <div className="site-shell" id="top">
+      <div className="world-backdrop" aria-hidden="true"><UniverseCanvas paused={scenePaused} /></div>
       <header className="topbar">
         <div className="container topbar-inner">
           <Brand />
@@ -76,8 +109,7 @@ export default function SiteExperience() {
       </header>
 
       <main>
-        <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-canvas"><UniverseCanvas paused={scenePaused} /></div>
+        <section className="hero" id="home" data-theme-color="#05080b" data-scene-accent="#b7f6dc" aria-labelledby="hero-title">
           <div className="hero-atmosphere" aria-hidden="true" />
           <div className="hero-gridlines" aria-hidden="true" />
           <div className="container hero-content">
@@ -104,7 +136,7 @@ export default function SiteExperience() {
           <div className="container hero-footer-line"><span><i>✳</i> INDEPENDENT BY NATURE. FUTURE-FOCUSED BY DESIGN.</span><a href="#vision">SCROLL TO EXPLORE <b>↓</b></a><span className="refresh-note">FRAME PACING: DISPLAY-SYNCED</span></div>
         </section>
 
-        <section className="vision section-pad" id="vision" data-reveal>
+        <section className="vision section-pad" id="vision" data-reveal data-theme-color="#07110f" data-scene-accent="#9ff3d2">
           <div className="container">
             <div className="section-heading"><span><i>01</i> / THE POINT OF VIEW</span><span className="section-heading-right">A DIFFERENT SCALE OF THINKING</span></div>
             <div className="vision-main">
@@ -119,7 +151,7 @@ export default function SiteExperience() {
           </div>
         </section>
 
-        <section className="frontier section-pad" id="frontier" data-reveal>
+        <section className="frontier section-pad" id="frontier" data-reveal data-theme-color="#07101a" data-scene-accent="#9bafff">
           <div className="container">
             <div className="section-heading"><span><i>02</i> / THE FRONTIER</span><span className="section-heading-right">THE NEXT CHAPTER IS FORMING</span></div>
             <div className="frontier-intro"><div><p className="micro-label">IN FORMATION</p><h2>A new universe<br />is taking <span>shape.</span></h2></div><p className="section-copy">Our applications are being developed with the same conviction that defines the brand: take the long view, sweat the details, and make something worth putting into the world. We’ll reveal them when they’re ready.</p></div>
@@ -139,7 +171,7 @@ export default function SiteExperience() {
           </div>
         </section>
 
-        <section className="studio section-pad" id="studio" data-reveal>
+        <section className="studio section-pad" id="studio" data-reveal data-theme-color="#08100f" data-scene-accent="#9ff3d2">
           <div className="container">
             <div className="section-heading"><span><i>03</i> / THE STUDIO</span><span className="section-heading-right">SELECT PROJECTS / DIRECT COLLABORATION</span></div>
             <div className="studio-layout"><div className="studio-copy"><p className="micro-label">FOR PEOPLE BUILDING WHAT’S NEXT</p><h2>Big ambition.<br /><span>Grounded execution.</span></h2><p className="section-copy">While our own frontier expands, we work with select businesses to turn difficult digital problems into thoughtful, dependable software. Small-team focus, direct communication, and care in every detail.</p><a className="button button-outline" href="#contact">Discuss a project <Arrow diagonal /></a></div>
@@ -148,7 +180,7 @@ export default function SiteExperience() {
           </div>
         </section>
 
-        <section className="contact section-pad" id="contact" data-reveal>
+        <section className="contact section-pad" id="contact" data-reveal data-theme-color="#080d17" data-scene-accent="#a8b6ff">
           <div className="container">
             <div className="section-heading"><span><i>04</i> / OPEN CHANNEL</span><span className="section-heading-right">START WITH A CONVERSATION</span></div>
             <div className="contact-layout"><div className="contact-copy"><p className="micro-label">ALL GREAT THINGS BEGIN SOMEWHERE</p><h2>What should<br />exist <span>next?</span></h2><p className="section-copy">Have an idea, a challenge, or a digital project that deserves real thought? Give us the signal. We read every genuine inquiry and will respond when there’s a good fit.</p><div className="contact-signal"><span className="signal-orb"><i /></span><div><b>CHANNEL OPEN</b><p>Ideas, collaborations, and considered challenges.</p></div></div></div>
@@ -165,7 +197,7 @@ export default function SiteExperience() {
         </section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-main"><div className="footer-brand"><Brand /><p>A new universe of software.<br />A long view of intelligence.</p></div><div className="footer-links"><a href="#vision">Vision</a><a href="#frontier">The frontier</a><a href="#studio">Studio</a><a href="#contact">Contact <Arrow diagonal /></a></div><a className="back-top" href="#top" aria-label="Back to top">↑</a></div><div className="container footer-legal"><span>© {new Date().getFullYear()} APPVERSE.SI</span><span>INDEPENDENT BY NATURE · FUTURE-FOCUSED BY DESIGN</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
+      <footer className="site-footer" data-theme-color="#05080b" data-scene-accent="#b7f6dc"><div className="container footer-main"><div className="footer-brand"><Brand /><p>A new universe of software.<br />A long view of intelligence.</p></div><div className="footer-links"><a href="#vision">Vision</a><a href="#frontier">The frontier</a><a href="#studio">Studio</a><a href="#contact">Contact <Arrow diagonal /></a></div><a className="back-top" href="#top" aria-label="Back to top">↑</a></div><div className="container footer-legal"><span>© {new Date().getFullYear()} APPVERSE.SI</span><span>INDEPENDENT BY NATURE · FUTURE-FOCUSED BY DESIGN</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
     </div>
   );
 }
