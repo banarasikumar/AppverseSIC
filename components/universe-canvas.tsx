@@ -162,7 +162,7 @@ const coronaVertex = [
   "  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);",
   "  gl_Position = projectionMatrix * mvPosition;",
   "}"
-].join("\\n");
+].join("\n");
 
 const coronaFragment = [
   "precision highp float;",
@@ -194,7 +194,7 @@ const coronaFragment = [
   "  vec3 tint = mix(uTint, vec3(1.0, 0.68, 0.43), smoothstep(1.82, 2.34, radius) * 0.72);",
   "  gl_FragColor = vec4(tint * intensity * 1.65, intensity * 0.34);",
   "}"
-].join("\\n");
+].join("\n");
 
 export default function UniverseCanvas({ paused = false }: SceneProps) {
   const hostRef = useRef<HTMLDivElement>(null);
