@@ -7,11 +7,11 @@ const siteUrl = "https://appverse.si";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "AppverseSI — Apps, Software & Product Engineering", template: "%s — AppverseSI" },
-  description: "AppverseSI develops and publishes its own apps and partners with businesses to plan, design, and build digital products. Independent applications today, ambitious connected experiences over time.",
+  description: "AppverseSI creates independent apps and digital products, with selected business projects for websites, apps, and custom software."
   applicationName: "AppverseSI",
   alternates: { canonical: "/" },
-  openGraph: { type: "website", url: siteUrl, siteName: "AppverseSI", title: "AppverseSI — Apps, Software & Product Engineering", description: "Independent applications and thoughtful digital products, built with businesses.", images: [{ url: "/opengraph-image.svg", alt: "AppverseSI — A New Universe of Software" }] },
-  twitter: { card: "summary_large_image", title: "AppverseSI — Apps, Software & Product Engineering", description: "AppverseSI builds its own apps and partners with businesses to create digital products.", images: ["/opengraph-image.svg"] },
+  openGraph: { type: "website", url: siteUrl, siteName: "AppverseSI", title: "AppverseSI — Apps, Software & Product Engineering", description: "Apps for today. A bigger vision for tomorrow. Discover AppverseSI and request a website, app, or custom software project.", images: [{ url: "/opengraph-image.svg", alt: "AppverseSI — Tomorrow, made real." }] },
+  twitter: { card: "summary_large_image", title: "AppverseSI — Apps, Software & Product Engineering", description: "AppverseSI creates independent apps and accepts selected website, app, and custom software projects.", images: ["/opengraph-image.svg"] },
   icons: { icon: "/icon.svg", shortcut: "/icon.svg" },
   robots: { index: true, follow: true }
 };
