@@ -1,15 +1,17 @@
-# AppverseSI — A New Universe of Software
+# AppverseSI — Apps, Software & Product Engineering
 
-An immersive, responsive Next.js experience for Appverse.si (Appverse Superintelligence), built around a real-time Three.js/WebGL particle universe.
+AppverseSI (Appverse Superintelligence) is an independent software business with two connected goals: develop and publish its own applications, and partner with businesses to plan, design, and build digital products. The long-term product vision includes more integrated experiences and, over time, ambitious super-apps.
 
-## Experience architecture
+The public product shelf is intentionally honest: it does not list unreleased product names, fabricated screenshots, customer logos, testimonials, or launch dates. Add products and case studies only when their details are verified and ready to publish.
 
-- Real-time 3D core with reflective materials, layered orbital rings, a shader-driven spiral particle field, near-field particles, and depth stars.
-- Pointer-reactive scene movement on desktop and touch/pointer interaction on mobile.
-- Display-synchronized `WebGLRenderer.setAnimationLoop` with no hard-coded 60 FPS cap. Actual refresh rate remains browser/device dependent; this code cannot force a display to run at 120 Hz.
-- Responsive particle budgets and capped device pixel ratio to help balance visual quality and performance on mobile.
-- Pause/resume control, tab-visibility pause, reduced-motion support, and a fallback background if WebGL is unavailable.
-- Brand story, development-stage areas, business services, and validated contact form.
+## Stack
+
+- Next.js App Router, React, and TypeScript.
+- Three.js/WebGL, dynamically loaded on the client for the immersive universe experience.
+- Responsive, dark editorial interface with semantic DOM content, keyboard-operable navigation, reduced-motion support, and a WebGL fallback.
+- Server-side inquiry endpoint at `app/api/contact/route.ts`, integrated with Resend when configured.
+
+The 3D renderer uses the browser's display-synchronized animation loop without a fixed 60 FPS cap. It does not force a monitor to run at 120 Hz and cannot guarantee a specific frame rate on every device.
 
 ## Run locally
 
@@ -20,29 +22,50 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. Run `npm run typecheck` and `npm run build` for local checks.
+Open http://localhost:3000. Before shipping changes, run:
 
-## Deploy to Vercel
+```bash
+npm run typecheck
+npm run build
+```
 
-1. Open https://vercel.com/new and import `banarasikumar/AppverseSIC` from GitHub.
-2. Keep the detected Next.js framework settings and deploy.
-3. Test the temporary `vercel.app` preview before connecting the custom domain.
-4. When ready, add `appverse.si` in Vercel project Settings → Domains and follow Vercel's exact DNS instructions.
+The project currently defines `dev`, `build`, `start`, and `typecheck` scripts. Do not treat a successful build as proof of visual, accessibility, or cross-device performance testing.
 
-A successful push to the connected repository will trigger automatic deployments once the repository is linked to a Vercel project. See [Vercel's Git deployment docs](https://vercel.com/docs/git).
+## GitHub and Vercel deployment
 
-## Business inquiry form
+Repository: https://github.com/banarasikumar/AppverseSIC
 
-The site can deploy without email delivery configured, but the form will show a setup message until these Vercel environment variables are added:
+The Vercel project is connected to this repository and tracks the `main` branch. Pushes to the connected branch trigger Vercel builds. The configured project lists `appverse.si` and `www.appverse.si` as domain aliases; check the Vercel dashboard if domain verification or DNS behavior needs attention.
 
-- `RESEND_API_KEY` — API key from Resend.
-- `CONTACT_TO_EMAIL` — inbox for inquiries.
-- `CONTACT_FROM_EMAIL` — sender identity on a domain verified in Resend.
+To verify a deployment:
+1. Check the latest deployment in Vercel and wait for its build state to become **Ready**.
+2. Open the deployment URL and test desktop and mobile navigation, the 3D experience, reduced-motion behavior, the products section, and section links.
+3. Submit a test inquiry only after configuring mail delivery, then verify the email actually arrives.
 
-Set the values under Vercel → Project → Settings → Environment Variables, redeploy, and test the form. Never commit real secrets. `.env.example` contains placeholders only.
+## Business inquiry delivery
 
-## Notes
+The form validates user input on the client and server and includes a honeypot field. It does **not** claim success when mail delivery is unavailable. The production form will return a setup error until these environment variables are configured in Vercel:
 
-- Three.js is loaded client-side; the page keeps usable text and navigation if WebGL fails or is unavailable.
-- Visual quality and frame rate depend on the visitor's GPU, browser, power mode, and display. No 120 FPS guarantee is made.
-- Product areas are marked in development. No unreleased product names or dates are invented.
+- `RESEND_API_KEY` — a real API key from Resend.
+- `CONTACT_TO_EMAIL` — the inbox that should receive project inquiries.
+- `CONTACT_FROM_EMAIL` — a sender identity on a domain verified with Resend.
+
+Set these under **Vercel → Project → Settings → Environment Variables**, for Production (and Preview too if you want preview-form testing), then redeploy. Use `.env.example` as a placeholder-only reference; never commit real keys or private contact credentials. No mail delivery credentials are currently included in the repository.
+
+## Project structure
+
+- `app/page.tsx` — home page entry.
+- `app/layout.tsx` — metadata, canonical URL, and global styles import.
+- `app/globals.css` — responsive design system and section styling.
+- `app/api/contact/route.ts` — validated server-side inquiry delivery.
+- `components/site-experience.tsx` — navigation, story sections, product shelf, and enquiry form.
+- `components/universe-canvas.tsx` — lazy-loaded Three.js scene, shaders, camera motion, and graceful fallback behavior.
+- `public/` — site icon and social-sharing assets.
+
+## Content and performance notes
+
+- Products are labelled as in development; no public product releases are claimed.
+- No real customer list, testimonials, awards, user metrics, or client logos are invented.
+- Three.js loads on the client so the core site content remains usable if WebGL is unavailable.
+- Actual frame rate depends on the browser, GPU, power mode, and display. No 120 FPS guarantee is made.
+- Do not add DNS changes, domain aliases, environment secrets, or production integrations without verifying the intended configuration.
