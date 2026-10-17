@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
         setError(result.error || "Sign-in failed. Please try again.");
         return;
       }
-      window.location.assign("/admin/dashboard");
+      window.location.assign("/dashboard");
     } catch {
       setError("We couldn't connect to the sign-in service. Please try again.");
     } finally {
