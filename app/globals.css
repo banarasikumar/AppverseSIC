@@ -1723,3 +1723,22 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .principle, .studio-services article, .product-shelf, .back-top { transition: none !important; }
 }
+
+
+.contact-direct-email {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 23px;
+  color: rgba(211, 222, 246, .72);
+  font-size: 11px;
+  line-height: 1.8;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.contact-direct-email:hover { color: #c5ceff; }
+.contact-direct-email .arrow { margin-left: 3px; }
+@media (max-width: 760px) {
+  .contact-direct-email { margin-top: 18px; font-size: 10px; }
+}
