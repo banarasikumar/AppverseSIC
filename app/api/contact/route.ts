@@ -178,7 +178,7 @@ export async function POST(request: Request) {
       hasRecipient: Boolean(to),
       hasSender: Boolean(from)
     });
-    return jsonError("The enquiry form is not connected yet. Please email us directly using the link below.", 503);
+    return jsonError("The enquiry form is temporarily unavailable. Please try again later.", 503);
   }
 
   const emailText = [
@@ -222,12 +222,12 @@ export async function POST(request: Request) {
       });
 
       if (response.status === 401 || response.status === 403) {
-        return jsonError("Our email service rejected its credentials or sender permissions. Please email us directly using the link below.", 502);
+      return jsonError("We couldn’t send your enquiry right now. Please try again later.", 502);
       }
       if (response.status === 422) {
-        return jsonError("Our email service rejected the sender or message configuration. Please email us directly using the link below.", 502);
+      return jsonError("We couldn’t send your enquiry right now. Please try again later.", 502);
       }
-      return jsonError("We couldn't send this through the form just now. Please email us directly using the link below.", 502);
+      return jsonError("We couldn’t send your enquiry right now. Please try again later.", 502);
     }
 
     return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
@@ -235,6 +235,6 @@ export async function POST(request: Request) {
     console.error("[AppverseSI contact] Email request failed before Resend confirmed delivery.", {
       reason: error instanceof Error ? error.message : "Unknown network error"
     });
-    return jsonError("We couldn't send this through the form just now. Please email us directly using the link below.", 502);
+      return jsonError("We couldn’t send your enquiry right now. Please try again later.", 502);
   }
 }
