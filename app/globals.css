@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
 
+/* Separate foundational styles from the intentional visual overrides. */
+@layer appverse-base, appverse-theme;
+
+@layer appverse-base {
+
+
 :root{
   --bg:#05080b;--bg2:#080d10;--panel:rgba(12,19,22,.68);--panel-solid:#0b1013;
   --ink:#f0f5f2;--muted:#98a59f;--muted2:#64736c;--line:rgba(208,239,224,.13);
@@ -315,9 +321,10 @@ a:hover .arrow{transform:translate(3px,-1px)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
   [data-reveal]{opacity:1;transform:none;transition:none}
 }
+}
 
-
-/* Cinematic art direction: let the WebGL world carry the visual weight. */
+@layer appverse-theme {
+/* AppverseSI theme: cinematic 3D-led visual system, responsive composition, and component styling. */
 :root {
   --scene-accent: #e7f0ff;
   --mint: #d5f0e5;
@@ -690,7 +697,7 @@ body {
 }
 
 
-/* APPVERSESI DESIGN PASS — true WebGL carries the visual weight; UI stays editorial and quiet. */
+/* Composition refinements: hero hierarchy, real-WebGL emphasis, and responsive product layout. */
 :root {
   --scene-accent: #dce7ff;
   --mint: #d6f7eb;
@@ -1034,7 +1041,7 @@ body {
 }
 
 
-/* Signature pass: the scene is the interface; the interface reacts, never shouts. */
+/* Interaction layer: aperture identity, pointer-following light, and magnetic primary action. */
 .brand {
   gap: 13px;
 }
@@ -1270,7 +1277,7 @@ body {
 }
 
 
-/* Clear, business-specific secondary CTA copy. */
+/* Business project CTA details. */
 .hero-business-link .hero-business-kicker {
   display: block;
   color: rgba(208, 221, 244, .53);
@@ -1297,4 +1304,5 @@ body {
 @media (max-width: 760px) {
   .hero-business-link .hero-business-kicker { font-size: 7px; }
   .hero-business-link > span:not(.hero-business-kicker) { font-size: 12px; }
+}
 }
