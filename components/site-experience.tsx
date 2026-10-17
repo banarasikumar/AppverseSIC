@@ -126,7 +126,7 @@ export default function SiteExperience() {
         return;
       }
       form.reset();
-      setFormState({ kind: "success", message: "Message received. Thanks for reaching out." });
+      setFormState({ kind: "success", message: "Enquiry sent. We’ll review your project and respond if it’s a fit." });
     } catch {
       setFormState({ kind: "error", message: "We couldn't connect just now. Please try again." });
     }
@@ -218,7 +218,7 @@ export default function SiteExperience() {
               <div className="product-shelf-copy">
                 <p className="product-kicker"><span className="eyebrow-dot" /> PRODUCT PIPELINE / 001</p>
                 <h3>Built with intent.<br />Announced when ready.</h3>
-                <p>We’ll feature our apps here as they become ready for release. We would rather share a product people can use than make promises about one that is not ready.</p>
+                <p>This is where we’ll introduce each app as it becomes ready for people to use.</p>
                 <div className="product-status">
                   <span className="status-pill"><i /> IN DEVELOPMENT</span>
                   <span className="product-status-note">REVEALED WHEN READY</span>
@@ -268,7 +268,7 @@ export default function SiteExperience() {
         <section className="studio section-pad" id="studio" data-reveal data-theme-color="#08100f" data-scene-accent="#9ff3d2">
           <div className="container">
             <div className="section-heading"><span><i>04</i> / THE STUDIO</span><span className="section-heading-right">WEBSITES, APPS & CUSTOM SOFTWARE</span></div>
-            <div className="studio-layout"><div className="studio-copy"><p className="micro-label">FOR BUSINESS PROJECTS</p><h2>Clear goals.<br /><span>Careful delivery.</span></h2><p className="section-copy">Businesses can request websites, web applications, and custom software from us. We take on selected projects where the goal is clear and the scope is right for our team.</p><a className="button button-outline" href="#contact">Discuss a project <Arrow diagonal /></a></div>
+            <div className="studio-layout"><div className="studio-copy"><p className="micro-label">FOR BUSINESS PROJECTS</p><h2>Clear goals.<br /><span>Careful delivery.</span></h2><p className="section-copy">Businesses can request websites, web applications, and custom software from us. We take on selected projects where the goal is clear and the scope is right for our team.</p><a className="button button-outline" href="#contact">Request a project <Arrow diagonal /></a></div>
               <div className="studio-services"><article><span>01</span><div><h3>Websites with a point of view</h3><p>Distinctive digital experiences that make a brand feel unmistakably itself.</p></div><b>↗</b></article><article><span>02</span><div><h3>Custom web applications</h3><p>Useful, fast interfaces built around real workflows and real people.</p></div><b>↗</b></article><article><span>03</span><div><h3>Software engineering</h3><p>Careful implementation, strong foundations, and room to evolve.</p></div><b>↗</b></article><div className="studio-note"><i /> OPEN TO A SMALL NUMBER OF WELL-SUITED PROJECTS</div></div>
             </div>
           </div>
