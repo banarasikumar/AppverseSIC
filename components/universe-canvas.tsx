@@ -424,7 +424,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
         };
 
         // FIELD 01 — a black hole with a hot, turbulent accretion disk, photon ring and lens-warped stars.
-        const primary = createBlackHole(new THREE.Vector3(isCompact ? 1.05 : 4.1, 0.15, 0), 0.0, 1.0);
+        const primary = createBlackHole(new THREE.Vector3(isCompact ? 3.35 : 4.3, isCompact ? -1.65 : 0.12, 0), 0.0, isCompact ? 0.86 : 1.0);
 
         // FIELD 02 — the throat of a wormhole: overlapping translucent rings in actual 3D space.
         const portal = new THREE.Group();
@@ -646,14 +646,14 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
 
           // The page's scroll position moves the physical camera through consecutive 3D environments.
           const desiredZ = 22 - progress * 128;
-          const desiredX = Math.sin(progress * Math.PI * 2.0) * 1.0 + pointer.x * (isCompact ? 0.28 : 1.05);
-          const desiredY = Math.sin(progress * Math.PI * 2.7) * 0.7 - pointer.y * (isCompact ? 0.2 : 0.62);
+          const desiredX = Math.sin(progress * Math.PI * 2.0) * 1.0 + pointer.x * (isCompact ? 0.34 : 1.8);
+          const desiredY = Math.sin(progress * Math.PI * 2.7) * 0.7 - pointer.y * (isCompact ? 0.24 : 0.96);
           camera.position.x += (desiredX - camera.position.x) * ease;
           camera.position.y += (desiredY - camera.position.y) * ease;
           camera.position.z += (desiredZ - camera.position.z) * ease;
           camera.lookAt(
-            Math.sin(progress * Math.PI * 2.0) * 0.45 + pointer.x * 0.16,
-            Math.sin(progress * Math.PI * 2.7) * 0.24 - pointer.y * 0.1,
+            Math.sin(progress * Math.PI * 2.0) * 0.45 + pointer.x * (isCompact ? 0.14 : 0.32),
+            Math.sin(progress * Math.PI * 2.7) * 0.24 - pointer.y * (isCompact ? 0.08 : 0.18),
             camera.position.z - 22
           );
 
