@@ -88,21 +88,22 @@ export default function SiteExperience() {
     updateTheme();
 
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    let revealObserver: IntersectionObserver | null = null;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
       nodes.forEach((node) => node.classList.add("is-visible"));
-      return;
+    } else {
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver?.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      nodes.forEach((node) => revealObserver?.observe(node));
     }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    nodes.forEach((node) => observer.observe(node));
     return () => {
-      observer.disconnect();
+      revealObserver?.disconnect();
       window.removeEventListener("scroll", onScrollTheme);
       window.removeEventListener("resize", onScrollTheme);
       if (themeFrame) window.cancelAnimationFrame(themeFrame);
@@ -172,7 +173,7 @@ export default function SiteExperience() {
             <a href="#frontier" onClick={closeMenu}>The frontier</a>
             <a href="#vision" onClick={closeMenu}>Our thinking</a>
             <a href="#studio" onClick={closeMenu}>Studio</a>
-            <a className="nav-contact" href="#contact" onClick={closeMenu}>For business <Arrow diagonal /></a>
+            <a className="nav-contact" href="#contact" onClick={closeMenu}>Request a project <Arrow diagonal /></a>
           </nav>
           <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen}><span /><span /></button>
         </div>
@@ -186,11 +187,11 @@ export default function SiteExperience() {
             <div className="hero-copy">
               <p className="eyebrow"><span className="eyebrow-dot" /> APPVERSE SUPERINTELLIGENCE <i>/</i> BUILDING WHAT COMES NEXT</p>
               <h1 id="hero-title">Tomorrow,<br />made <em>real.</em></h1>
-              <p className="hero-lede">A new universe of software, taking shape.</p>
-              <p className="hero-body">Ideas should do more than look good on a screen. We’re building useful apps and digital experiences for the world ahead.</p>
+              <p className="hero-lede">Apps for today. A bigger vision for tomorrow.</p>
+              <p className="hero-body">We’re creating useful products now, while exploring how digital experiences can work better together.</p>
               <div className="hero-actions">
-                <a className="button button-solid button-magnetic" href="#products" onPointerMove={moveMagnetic} onPointerLeave={resetMagnetic}>Explore what we’re building <Arrow /></a>
-                <a className="hero-business-link" href="#contact">Have something ambitious in mind? <span>Let’s build it together <Arrow diagonal /></span></a>
+                <a className="button button-solid button-magnetic" href="#products" onPointerMove={moveMagnetic} onPointerLeave={resetMagnetic}>Explore our apps <Arrow /></a>
+                <a className="hero-business-link" href="#contact"><span className="hero-business-kicker">FOR BUSINESSES</span><span>Request a project <Arrow diagonal /></span></a>
               </div>
             </div>
             <div className="scene-controls">
@@ -206,7 +207,7 @@ export default function SiteExperience() {
             <div className="section-heading"><span><i>01</i> / OUR PRODUCTS</span><span className="section-heading-right">BUILT IN-HOUSE · RELEASED WHEN READY</span></div>
             <div className="products-intro">
               <div><p className="micro-label">INDEPENDENT BY DESIGN</p><h2>Our own apps.<br /><span>Our next frontier.</span></h2></div>
-              <p className="section-copy">Useful by design. Unexpected in possibility. We’re shaping a growing universe of software — with a long view toward experiences that work better together.</p>
+              <p className="section-copy">A growing portfolio of useful apps is the focus now. Over time, we want our products to work together more naturally, opening the door to richer digital experiences.</p>
             </div>
             <div className="product-shelf" onPointerMove={followPointer} onPointerLeave={resetPointer}>
               <div className="product-stage-copy">
@@ -217,12 +218,12 @@ export default function SiteExperience() {
               <div className="product-shelf-copy">
                 <p className="product-kicker"><span className="eyebrow-dot" /> PRODUCT PIPELINE / 001</p>
                 <h3>Built with intent.<br />Announced when ready.</h3>
-                <p>Every product starts with a simple question: can software make something meaningfully better? The work is underway. We’ll share each release when it’s ready to stand on its own.</p>
+                <p>We’ll feature our apps here as they become ready for release. We would rather share a product people can use than make promises about one that is not ready.</p>
                 <div className="product-status">
                   <span className="status-pill"><i /> IN DEVELOPMENT</span>
                   <span className="product-status-note">REVEALED WHEN READY</span>
                 </div>
-                <a className="product-build-link" href="#contact">Build with AppverseSI <Arrow diagonal /></a>
+                <a className="product-build-link" href="#contact">Business project enquiries <Arrow diagonal /></a>
               </div>
             </div>
             <div className="products-footnote"><span>01 / USEFUL INDEPENDENT APPS</span><span>02 / CONNECTED DIGITAL EXPERIENCES</span><span>03 / LONG-TERM SUPER-APP AMBITION</span></div>
@@ -266,8 +267,8 @@ export default function SiteExperience() {
 
         <section className="studio section-pad" id="studio" data-reveal data-theme-color="#08100f" data-scene-accent="#9ff3d2">
           <div className="container">
-            <div className="section-heading"><span><i>04</i> / THE STUDIO</span><span className="section-heading-right">CRAFT, ENGINEERING & COLLABORATION</span></div>
-            <div className="studio-layout"><div className="studio-copy"><p className="micro-label">FOR PEOPLE BUILDING WHAT’S NEXT</p><h2>Big ambition.<br /><span>Grounded execution.</span></h2><p className="section-copy">While our own apps take shape, we work with businesses to plan, design, and engineer digital products — from focused websites and applications to larger platforms. The starting point is the problem, the people using the product, and a scope we can execute with care.</p><a className="button button-outline" href="#contact">Discuss a project <Arrow diagonal /></a></div>
+            <div className="section-heading"><span><i>04</i> / THE STUDIO</span><span className="section-heading-right">WEBSITES, APPS & CUSTOM SOFTWARE</span></div>
+            <div className="studio-layout"><div className="studio-copy"><p className="micro-label">FOR BUSINESS PROJECTS</p><h2>Clear goals.<br /><span>Careful delivery.</span></h2><p className="section-copy">Businesses can request websites, web applications, and custom software from us. We take on selected projects where the goal is clear and the scope is right for our team.</p><a className="button button-outline" href="#contact">Discuss a project <Arrow diagonal /></a></div>
               <div className="studio-services"><article><span>01</span><div><h3>Websites with a point of view</h3><p>Distinctive digital experiences that make a brand feel unmistakably itself.</p></div><b>↗</b></article><article><span>02</span><div><h3>Custom web applications</h3><p>Useful, fast interfaces built around real workflows and real people.</p></div><b>↗</b></article><article><span>03</span><div><h3>Software engineering</h3><p>Careful implementation, strong foundations, and room to evolve.</p></div><b>↗</b></article><div className="studio-note"><i /> OPEN TO A SMALL NUMBER OF WELL-SUITED PROJECTS</div></div>
             </div>
           </div>
@@ -275,14 +276,14 @@ export default function SiteExperience() {
 
         <section className="contact section-pad" id="contact" data-reveal data-theme-color="#080d17" data-scene-accent="#a8b6ff">
           <div className="container">
-            <div className="section-heading"><span><i>05</i> / OPEN CHANNEL</span><span className="section-heading-right">START WITH A CONVERSATION</span></div>
-            <div className="contact-layout"><div className="contact-copy"><p className="micro-label">ALL GREAT THINGS BEGIN SOMEWHERE</p><h2>What should<br />exist <span>next?</span></h2><p className="section-copy">Have an idea for an app, platform, or digital workflow? Tell us what you’re trying to achieve. We review each genuine inquiry and respond when there’s a good fit.</p><div className="contact-signal"><span className="signal-orb"><i /></span><div><b>CHANNEL OPEN</b><p>Ideas, collaborations, and considered challenges.</p></div></div></div>
+            <div className="section-heading"><span><i>05</i> / BUSINESS ENQUIRIES</span><span className="section-heading-right">REQUEST A PROJECT</span></div>
+            <div className="contact-layout"><div className="contact-copy"><p className="micro-label">FOR WEBSITES, APPS & CUSTOM SOFTWARE</p><h2>What do you need<br /><span>built?</span></h2><p className="section-copy">Tell us what you need, what it should do, and who it is for. We review each project enquiry and respond when the work is a good fit.</p><div className="contact-signal"><span className="signal-orb"><i /></span><div><b>PROJECT ENQUIRIES</b><p>Websites, apps, and custom software.</p></div></div></div>
               <form className="contact-form" onSubmit={submitInquiry}>
                 <div className="form-heading"><span>INQUIRY / 001</span><span>FIELDS MARKED * ARE REQUIRED</span></div>
-                <div className="form-grid"><label>Your name <i>*</i><input name="name" autoComplete="name" placeholder="How should we address you?" required maxLength={100} /></label><label>Email address <i>*</i><input name="email" autoComplete="email" type="email" placeholder="you@company.com" required maxLength={254} /></label><label>Company <small>OPTIONAL</small><input name="company" autoComplete="organization" placeholder="Your organization" maxLength={120} /></label><label>Project type<select name="projectType" defaultValue=""><option value="" disabled>Choose a direction</option><option>Website / digital presence</option><option>Custom web application</option><option>Software engineering</option><option>Product collaboration</option><option>Product planning / discovery</option><option>App or platform development</option><option>Long-term product / super-app concept</option><option>Something else</option></select></label></div>
-                <label className="message-label">Tell us what you have in mind <i>*</i><textarea name="message" placeholder="The idea, the problem, the thing you wish existed…" required minLength={12} maxLength={4000} rows={4} /></label>
+                <div className="form-grid"><label>Your name <i>*</i><input name="name" autoComplete="name" placeholder="How should we address you?" required maxLength={100} /></label><label>Email address <i>*</i><input name="email" autoComplete="email" type="email" placeholder="you@company.com" required maxLength={254} /></label><label>Company <small>OPTIONAL</small><input name="company" autoComplete="organization" placeholder="Your organization" maxLength={120} /></label><label>Project type<select name="projectType" defaultValue=""><option value="" disabled>Choose a direction</option><option>Website / digital presence</option><option>Mobile app</option><option>Web application</option><option>Custom software</option><option>Product planning / discovery</option><option>App or platform concept</option><option>Something else</option></select></label></div>
+                <label className="message-label">Tell us what you have in mind <i>*</i><textarea name="message" placeholder="Describe the app, website or software you need, what it should do, and any key requirements." required minLength={12} maxLength={4000} rows={4} /></label>
                 <div className="honeypot" aria-hidden="true"><label>Leave empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-                <div className="form-submit-row"><p>Your information is used only to respond to your inquiry.</p><button className="button button-solid" type="submit" disabled={formState.kind === "sending"}>{formState.kind === "sending" ? "Transmitting…" : "Send the signal"} <Arrow /></button></div>
+                <div className="form-submit-row"><p>Your information is used only to respond to your inquiry.</p><button className="button button-solid" type="submit" disabled={formState.kind === "sending"}>{formState.kind === "sending" ? "Sending…" : "Send project enquiry"} <Arrow /></button></div>
                 <p className={"form-feedback form-feedback--" + formState.kind} aria-live="polite" role={formState.kind === "error" ? "alert" : "status"}>{formState.message || ""}</p>
               </form>
             </div>
@@ -290,7 +291,7 @@ export default function SiteExperience() {
         </section>
       </main>
 
-      <footer className="site-footer" data-theme-color="#05080b" data-scene-accent="#b7f6dc"><div className="container footer-main"><div className="footer-brand"><Brand footer /><p>A new universe of software.<br />A long view of intelligence.</p></div><div className="footer-links"><a href="#vision">Vision</a><a href="#frontier">The frontier</a><a href="#products">Our apps</a><a href="#studio">Studio</a><a href="#contact">Contact <Arrow diagonal /></a></div><a className="back-top" href="#top" aria-label="Back to top">↑</a></div><div className="container footer-legal"><span>© {new Date().getFullYear()} APPVERSE.SI</span><span>INDEPENDENT BY NATURE · FUTURE-FOCUSED BY DESIGN</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
+      <footer className="site-footer" data-theme-color="#05080b" data-scene-accent="#b7f6dc"><div className="container footer-main"><div className="footer-brand"><Brand footer /><p>A new universe of software.<br />A long view of intelligence.</p></div><div className="footer-links"><a href="#products">Our apps</a><a href="#frontier">The frontier</a><a href="#vision">Our thinking</a><a href="#studio">Studio</a><a href="#contact">Business enquiries <Arrow diagonal /></a></div><a className="back-top" href="#top" aria-label="Back to top">↑</a></div><div className="container footer-legal"><span>© {new Date().getFullYear()} APPVERSE.SI</span><span>INDEPENDENT BY NATURE · FUTURE-FOCUSED BY DESIGN</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
     </div>
   );
 }
