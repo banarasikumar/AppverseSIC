@@ -9,7 +9,7 @@ The public product shelf is intentionally honest: it does not list unreleased pr
 - Next.js App Router, React, and TypeScript.
 - Three.js/WebGL, dynamically loaded on the client for a scroll-driven 3D universe: shader-rendered interstellar dust, gravitational-lensing-style sky distortion, a black-hole event horizon, turbulent accretion disk, shader-driven corona, depth particles, a wormhole-like formation, and neural-constellation geometry.
 - Responsive, dark editorial interface with the products section immediately following the hero, an apps-first primary CTA, a lower-priority business collaboration link, semantic DOM content, keyboard-operable navigation, reduced-motion support, and a WebGL fallback.
-- Server-side inquiry endpoint at `app/api/contact/route.ts`, integrated with Resend when configured.
+- Server-side inquiry endpoint at `app/api/contact/route.ts`, with persistent Supabase storage and a private admin inbox.
 
 The 3D renderer uses the browser's display-synchronized animation loop without a fixed 60 FPS cap. It does not force a monitor to run at 120 Hz and cannot guarantee a specific frame rate on every device.
 
@@ -71,3 +71,23 @@ Set the email variables under **Vercel → Project → Settings → Environment 
 - Three.js loads on the client so the core site content remains usable if WebGL is unavailable.
 - Actual frame rate depends on the browser, GPU, power mode, and display. No 120 FPS guarantee is made.
 - Do not add DNS changes, domain aliases, environment secrets, or production integrations without verifying the intended configuration.
+
+
+## Private admin inbox
+
+The business enquiry form stores submissions in Supabase so enquiries remain available even if email delivery is not configured.
+
+1. Create a Supabase project.
+2. Run the SQL in `supabase/migrations/20261017000000_contact_messages.sql` in the Supabase SQL Editor.
+3. In Vercel Project Settings → Environment Variables, add these variables to the `appverse-sic` project for Production:
+   - `SUPABASE_URL`: the project URL from Supabase Project Settings → API.
+   - `SUPABASE_SERVICE_ROLE_KEY`: the service-role key from the same settings page. This is a secret and must never be exposed in browser code or given a `NEXT_PUBLIC_` prefix.
+   - `ADMIN_USERNAME`: the admin login username.
+   - `ADMIN_PASSWORD`: a strong, unique admin password.
+   - `ADMIN_SESSION_SECRET`: a cryptographically random secret of at least 32 characters.
+4. Redeploy after saving the variables.
+5. Add `admin.appverse.si` as a domain on the `appverse-sic` Vercel project. The root of that host is routed to the private admin sign-in; `appverse.si` continues to serve the public website.
+
+The inbox uses signed, HTTP-only, secure production cookies with an eight-hour expiry. Admin APIs reject unauthenticated requests, and the contact form uses server-side validation, a honeypot, request-size limits, and rate limiting. The Supabase service-role key is used only on the server.
+
+For local development, copy `.env.example` to `.env.local` and set values for your own Supabase project and admin credentials. Never commit `.env.local` or real keys.
