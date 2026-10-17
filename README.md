@@ -1,6 +1,6 @@
 # AppverseSI — Apps, Software & Product Engineering
 
-AppverseSI (Appverse Superintelligence) is an independent software business whose own apps and software products lead the story. It also welcomes business enquiries from teams who want a partner to plan, design, and build digital products. The long-term product vision includes more integrated experiences and, over time, ambitious super-apps.
+AppverseSI (Appverse Superintelligence) is an independent software company focused on creating and publishing useful applications. It also welcomes project enquiries from businesses seeking websites, mobile apps, web applications, and custom software. The long-term product vision includes more connected digital experiences and ambitious super-apps.
 
 The public product shelf is intentionally honest: it does not list unreleased product names, fabricated screenshots, customer logos, testimonials, or launch dates. Add products and case studies only when their details are verified and ready to publish.
 
@@ -8,7 +8,7 @@ The public product shelf is intentionally honest: it does not list unreleased pr
 
 - Next.js App Router, React, and TypeScript.
 - Three.js/WebGL, dynamically loaded on the client for a scroll-driven 3D universe: shader-rendered interstellar dust, gravitational-lensing-style sky distortion, a black-hole event horizon, turbulent accretion disk, shader-driven corona, depth particles, a wormhole-like formation, and neural-constellation geometry.
-- Responsive, dark editorial interface with the own-products section immediately following the hero, an apps-first primary CTA, a lower-priority business collaboration link, semantic DOM content, keyboard-operable navigation, reduced-motion support, and a WebGL fallback.
+- Responsive, dark editorial interface with the products section immediately following the hero, an apps-first primary CTA, a lower-priority business collaboration link, semantic DOM content, keyboard-operable navigation, reduced-motion support, and a WebGL fallback.
 - Server-side inquiry endpoint at `app/api/contact/route.ts`, integrated with Resend when configured.
 
 The 3D renderer uses the browser's display-synchronized animation loop without a fixed 60 FPS cap. It does not force a monitor to run at 120 Hz and cannot guarantee a specific frame rate on every device.
@@ -44,13 +44,14 @@ To verify a deployment:
 
 ## Business inquiry delivery
 
-The form validates user input on the client and server and includes a honeypot field. It does **not** claim success when mail delivery is unavailable. The production form will return a setup error until these environment variables are configured in Vercel:
+The form validates input on the server, checks request origin and payload size, and limits repeated submissions. When Upstash is configured, the limit is shared across serverless instances; otherwise, the in-memory fallback is best-effort and applies only within a warm instance. The form does **not** claim success when mail delivery is unavailable. The production form returns a setup error until these email variables are configured in Vercel:
 
 - `RESEND_API_KEY` — a real API key from Resend.
 - `CONTACT_TO_EMAIL` — the inbox that should receive project inquiries.
 - `CONTACT_FROM_EMAIL` — a sender identity on a domain verified with Resend.
+- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` — optional but recommended for atomic, shared rate limiting across Vercel instances.
 
-Set these under **Vercel → Project → Settings → Environment Variables**, for Production (and Preview too if you want preview-form testing), then redeploy. Use `.env.example` as a placeholder-only reference; never commit real keys or private contact credentials. No mail delivery credentials are currently included in the repository.
+Set the email variables under **Vercel → Project → Settings → Environment Variables** for Production, and Preview if you want to test preview deployments, then redeploy. For real delivery, verify a sender domain in Resend and use a real receiving inbox. Set the two Upstash variables to enable the shared 5-request-per-15-minute limiter; without them, only best-effort process-local limits apply. Use `.env.example` as a placeholder-only reference; never commit real keys or private contact credentials. No mail delivery credentials are currently included in the repository.
 
 ## Project structure
 
@@ -64,7 +65,8 @@ Set these under **Vercel → Project → Settings → Environment Variables**, f
 
 ## Content and performance notes
 
-- Products are labelled as in development; no public product releases are claimed.
+- Product sections use natural, product-led copy; no public product releases are claimed until products are ready.
+- The hero CTA leads to the apps section; business project requests are a separate secondary path.
 - No real customer list, testimonials, awards, user metrics, or client logos are invented.
 - Three.js loads on the client so the core site content remains usable if WebGL is unavailable.
 - Actual frame rate depends on the browser, GPU, power mode, and display. No 120 FPS guarantee is made.
