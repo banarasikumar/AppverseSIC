@@ -424,7 +424,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
         };
 
         // FIELD 01 — a black hole with a hot, turbulent accretion disk, photon ring and lens-warped stars.
-        const primary = createBlackHole(new THREE.Vector3(isCompact ? 3.35 : 4.3, isCompact ? -1.65 : 0.12, 0), 0.0, isCompact ? 0.86 : 1.0);
+        const primary = createBlackHole(new THREE.Vector3(isCompact ? 3.65 : 4.3, isCompact ? -3.1 : 0.12, 0), 0.0, isCompact ? 0.82 : 1.0);
 
         // FIELD 02 — the throat of a wormhole: overlapping translucent rings in actual 3D space.
         const portal = new THREE.Group();
