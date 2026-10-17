@@ -99,11 +99,11 @@ export default function SiteExperience() {
         <div className="container topbar-inner">
           <Brand />
           <nav className={menuOpen ? "main-nav main-nav--open" : "main-nav"} aria-label="Main navigation">
-            <a href="#vision" onClick={closeMenu}>Vision</a>
-            <a href="#frontier" onClick={closeMenu}>The frontier</a>
             <a href="#products" onClick={closeMenu}>Our apps</a>
+            <a href="#frontier" onClick={closeMenu}>The frontier</a>
+            <a href="#vision" onClick={closeMenu}>Our thinking</a>
             <a href="#studio" onClick={closeMenu}>Studio</a>
-            <a className="nav-contact" href="#contact" onClick={closeMenu}>Start a conversation <Arrow diagonal /></a>
+            <a className="nav-contact" href="#contact" onClick={closeMenu}>For business <Arrow diagonal /></a>
           </nav>
           <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen}><span /><span /></button>
         </div>
@@ -116,29 +116,54 @@ export default function SiteExperience() {
           <div className="container hero-content">
             <div className="hero-copy">
               <p className="eyebrow"><span className="eyebrow-dot" /> APPVERSE SUPERINTELLIGENCE <i>/</i> AN EXPLORATION OF WHAT COMES NEXT</p>
-              <h1 id="hero-title">Beyond the<br />known <em>universe.</em></h1>
-              <p className="hero-lede">We build and publish our own apps — and build with businesses.</p>
-              <p className="hero-body">AppverseSI is an independent software business developing its own applications and partnering with businesses to plan, design, and build digital products.</p>
+              <h1 id="hero-title">Our apps.<br />Our <em>universe.</em></h1>
+              <p className="hero-lede">Software built by us, for the world.</p>
+              <p className="hero-body">We develop and publish our own applications, with a long-term ambition to create more connected digital experiences. Businesses can also approach us to plan, design, and build digital products together.</p>
               <div className="hero-actions">
                 <a className="button button-solid" href="#products">Explore our apps <Arrow /></a>
-                <a className="hero-business-link" href="#studio">For businesses: build with us <Arrow diagonal /></a>
+                <a className="hero-business-link" href="#contact">Building for a business? <span>Let’s work together <Arrow diagonal /></span></a>
               </div>
-              <div className="hero-index"><span>01</span><i /> THE FUTURE IS NOT A FLAT SURFACE</div>
+              <div className="hero-index"><span>APPVERSESI</span><i /> INDEPENDENT SOFTWARE, BUILT WITH INTENT</div>
             </div>
-            <div className="scene-label scene-label--top"><span className="tiny-cross">+</span><span>EVENT HORIZON</span><b>AP / 001</b></div>
-            <div className="scene-hud">
-              <div className="hud-heading"><span className="hud-live" /><span>BLACK HOLE / ACCRETION DISK</span><b>LIVE 3D</b></div>
-              <p className="scene-caption">Light curves. Matter spirals. Space bends.</p>
-              <button className="scene-toggle" type="button" onClick={() => setScenePaused(!scenePaused)} aria-pressed={scenePaused}><span>{scenePaused ? "▶" : "Ⅱ"}</span>{scenePaused ? "RESUME MOVEMENT" : "PAUSE MOVEMENT"}</button>
+            <div className="scene-controls">
+              <span>REAL-TIME 3D · SCROLL TO TRAVEL</span>
+              <button className="scene-toggle" type="button" onClick={() => setScenePaused(!scenePaused)} aria-pressed={scenePaused} aria-label={scenePaused ? "Resume 3D scene animation" : "Pause 3D scene animation"}><span aria-hidden="true">{scenePaused ? "▶" : "Ⅱ"}</span>{scenePaused ? "Resume scene" : "Pause scene"}</button>
             </div>
-            <div className="scene-label scene-label--left"><span>GRAVITATIONAL LENSING</span><i>↘</i></div>
           </div>
-          <div className="container hero-footer-line"><span><i>✳</i> BUILT WITH CURIOSITY. DESIGNED FOR WHAT COMES NEXT.</span><a href="#vision">SCROLL TO DESCEND <b>↓</b></a><span className="refresh-note">FRAME PACING: DISPLAY-SYNCED</span></div>
+          <div className="container hero-footer-line"><span><i>✳</i> OUR PRODUCTS. OUR LONG-TERM VISION.</span><a href="#products">DISCOVER WHAT WE’RE BUILDING <b>↓</b></a></div>
+        </section>
+
+        <section className="products section-pad" id="products" data-reveal data-theme-color="#080d14" data-scene-accent="#a8b6ff">
+          <div className="container">
+            <div className="section-heading"><span><i>01</i> / OUR PRODUCTS</span><span className="section-heading-right">BUILT IN-HOUSE · RELEASED WHEN READY</span></div>
+            <div className="products-intro">
+              <div><p className="micro-label">INDEPENDENT BY DESIGN</p><h2>Our own apps.<br /><span>Our next frontier.</span></h2></div>
+              <p className="section-copy">AppverseSI develops and publishes its own software. We’re working toward a portfolio of useful applications, with a longer-term ambition to create more connected, super-app experiences.</p>
+            </div>
+            <div className="product-shelf">
+              <div className="product-stage-copy">
+                <span className="product-stage-index">APPVERSESI / IN-HOUSE</span>
+                <p>Made here.<br /><em>Released with purpose.</em></p>
+                <span className="product-stage-caption">OUR PRODUCTS COME FIRST</span>
+              </div>
+              <div className="product-shelf-copy">
+                <p className="product-kicker"><span className="eyebrow-dot" /> PRODUCT PIPELINE / 001</p>
+                <h3>Built with intent.<br />Announced when ready.</h3>
+                <p>Our own apps are central to the AppverseSI vision, not just a portfolio of client work. We’re building toward that portfolio now; individual products will appear here when there’s something real and ready to share.</p>
+                <div className="product-status">
+                  <span className="status-pill"><i /> IN DEVELOPMENT</span>
+                  <span className="product-status-note">NO PUBLIC RELEASES ANNOUNCED</span>
+                </div>
+                <a className="product-build-link" href="#contact">Build with AppverseSI <Arrow diagonal /></a>
+              </div>
+            </div>
+            <div className="products-footnote"><span>01 / USEFUL INDEPENDENT APPS</span><span>02 / CONNECTED DIGITAL EXPERIENCES</span><span>03 / LONG-TERM SUPER-APP AMBITION</span></div>
+          </div>
         </section>
 
         <section className="vision section-pad" id="vision" data-reveal data-theme-color="#07110f" data-scene-accent="#9ff3d2">
           <div className="container">
-            <div className="section-heading"><span><i>01</i> / THE POINT OF VIEW</span><span className="section-heading-right">A DIFFERENT SCALE OF THINKING</span></div>
+            <div className="section-heading"><span><i>02</i> / THE POINT OF VIEW</span><span className="section-heading-right">A DIFFERENT SCALE OF THINKING</span></div>
             <div className="vision-main">
               <p className="micro-label">THINK IN UNIVERSES.</p>
               <div><h2>Don’t just add<br />to the noise. <span>Change the signal.</span></h2><p className="section-copy">The most interesting questions are rarely the small ones. We are exploring how software can become more capable, more intuitive, and more human — while staying grounded in things that are genuinely useful.</p><p className="section-copy">The aim is not spectacle for its own sake. It is to make the extraordinary useful, and to build with enough care that the technology gets out of the way.</p></div>
@@ -153,7 +178,7 @@ export default function SiteExperience() {
 
         <section className="frontier section-pad" id="frontier" data-reveal data-theme-color="#07101a" data-scene-accent="#9bafff">
           <div className="container">
-            <div className="section-heading"><span><i>02</i> / THE FRONTIER</span><span className="section-heading-right">THE NEXT CHAPTER IS FORMING</span></div>
+            <div className="section-heading"><span><i>03</i> / THE FRONTIER</span><span className="section-heading-right">THE NEXT CHAPTER IS FORMING</span></div>
             <div className="frontier-intro"><div><p className="micro-label">IN FORMATION</p><h2>A new universe<br />is taking <span>shape.</span></h2></div><p className="section-copy">A new generation of software should feel less like operating a machine and more like extending what a person can do. That is the direction we are working toward.</p></div>
             <div className="frontier-console">
               <div className="console-top"><span><i /> FIELDS OF EXPLORATION</span><span>INTELLIGENCE IN FORMATION</span><span>STATE: EVOLVING</span></div>
@@ -168,38 +193,6 @@ export default function SiteExperience() {
               </div>
               <div className="console-bottomline"><span>THE WORK COMES BEFORE THE ANNOUNCEMENT.</span><span>WE’RE JUST GETTING STARTED <b>↗</b></span></div>
             </div>
-          </div>
-        </section>
-
-        <section className="products section-pad" id="products" data-reveal data-theme-color="#080d14" data-scene-accent="#a8b6ff">
-          <div className="container">
-            <div className="section-heading"><span><i>03</i> / OUR PRODUCTS</span><span className="section-heading-right">BUILT IN-HOUSE · RELEASED WHEN READY</span></div>
-            <div className="products-intro">
-              <div><p className="micro-label">INDEPENDENT BY DESIGN</p><h2>Our own apps.<br /><span>Our next frontier.</span></h2></div>
-              <p className="section-copy">AppverseSI develops and publishes its own software. We’re working toward a portfolio of useful applications, with a longer-term ambition to create more connected, super-app experiences.</p>
-            </div>
-            <div className="product-shelf">
-              <div className="product-orbit" aria-hidden="true">
-                <div className="product-orbit__ring product-orbit__ring--outer" />
-                <div className="product-orbit__ring product-orbit__ring--middle" />
-                <div className="product-orbit__ring product-orbit__ring--inner" />
-                <div className="product-orbit__core"><span>AV</span></div>
-                <span className="product-orbit__label product-orbit__label--top">PRODUCT SYSTEM / 001</span>
-                <span className="product-orbit__label product-orbit__label--bottom">INDEPENDENTLY BUILT</span>
-                <i className="product-orbit__satellite" />
-              </div>
-              <div className="product-shelf-copy">
-                <p className="product-kicker"><span className="eyebrow-dot" /> PRODUCT PIPELINE / 001</p>
-                <h3>Built with intent.<br />Announced when ready.</h3>
-                <p>Our own apps are central to the AppverseSI vision, not just a portfolio of client work. We’re building toward that portfolio now; individual products will appear here when there’s something real and ready to share.</p>
-                <div className="product-status">
-                  <span className="status-pill"><i /> IN DEVELOPMENT</span>
-                  <span className="product-status-note">NO PUBLIC RELEASES ANNOUNCED</span>
-                </div>
-                <a className="product-build-link" href="#contact">Build with AppverseSI <Arrow diagonal /></a>
-              </div>
-            </div>
-            <div className="products-footnote"><span>01 / USEFUL INDEPENDENT APPS</span><span>02 / CONNECTED DIGITAL EXPERIENCES</span><span>03 / LONG-TERM SUPER-APP AMBITION</span></div>
           </div>
         </section>
 
