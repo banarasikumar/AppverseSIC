@@ -120,8 +120,8 @@ export default function SiteExperience() {
               <p className="hero-lede">We build and publish our own apps — and build with businesses.</p>
               <p className="hero-body">AppverseSI is an independent software business developing its own applications and partnering with businesses to plan, design, and build digital products.</p>
               <div className="hero-actions">
-                <a className="button button-solid" href="#contact">Build with AppverseSI <Arrow /></a>
-                <a className="button button-quiet" href="#products">Explore our apps <Arrow diagonal /></a>
+                <a className="button button-solid" href="#products">Explore our apps <Arrow /></a>
+                <a className="hero-business-link" href="#studio">For businesses: build with us <Arrow diagonal /></a>
               </div>
               <div className="hero-index"><span>01</span><i /> THE FUTURE IS NOT A FLAT SURFACE</div>
             </div>
