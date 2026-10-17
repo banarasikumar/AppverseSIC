@@ -1,1 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#080b0c"/><g fill="none" stroke="#b4f0d3" stroke-width="1.5"><circle cx="32" cy="32" r="16"/><ellipse cx="32" cy="32" rx="25" ry="9" transform="rotate(55 32 32)"/><ellipse cx="32" cy="32" rx="25" ry="9" transform="rotate(-55 32 32)"/></g><circle cx="32" cy="32" r="4" fill="#b4f0d3"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="rim" x1="8" y1="9" x2="56" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3F6FF"/>
+      <stop offset=".42" stop-color="#9EADFF"/>
+      <stop offset=".76" stop-color="#B7F7E4"/>
+      <stop offset="1" stop-color="#7586DE"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0" cy="0" r="1" gradientTransform="translate(25 22) rotate(58) scale(32)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B7C8FF"/>
+      <stop offset=".32" stop-color="#39466F"/>
+      <stop offset=".7" stop-color="#101421"/>
+      <stop offset="1" stop-color="#03040A"/>
+    </radialGradient>
+    <radialGradient id="light" cx="0" cy="0" r="1" gradientTransform="translate(44 17) rotate(126) scale(34)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C3D2FF" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#8D9DFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="10" y="10" width="44" height="44" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#05070D"/>
+  <circle cx="32" cy="32" r="24.8" stroke="url(#rim)" stroke-opacity=".3" stroke-width=".8"/>
+  <path d="M9.5 37.5C7.2 25.2 16.5 11.5 29 8.7C41.4 6 53.2 16.5 53.8 28.5" stroke="url(#rim)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M52 34C50.8 45.3 40.2 54.3 28.2 53.5C21.1 53.1 14.8 49.3 10.9 43.6" stroke="url(#rim)" stroke-width="2.7" stroke-linecap="round"/>
+  <path d="M11 19.2C20.4 13.1 37.2 18.4 46.1 29.9C51.3 36.8 51.8 44.1 47.8 48.1" stroke="#B4C4FF" stroke-opacity=".65" stroke-width="1"/>
+  <path d="M14.2 46.1C14.9 34.3 28.1 20.7 40.1 16.1C46.3 13.7 50.9 15.9 51.6 20.5" stroke="#9DF2DD" stroke-opacity=".62" stroke-width="1"/>
+  <ellipse cx="32" cy="32" rx="11.8" ry="15.5" transform="rotate(39 32 32)" fill="url(#core)" stroke="url(#rim)" stroke-width="1"/>
+  <ellipse cx="32" cy="32" rx="7.6" ry="10.8" transform="rotate(39 32 32)" fill="url(#light)" opacity=".55"/>
+  <circle cx="32" cy="32" r="5.1" fill="#03040A" stroke="#D7E2FF" stroke-opacity=".8" stroke-width=".8"/>
+  <circle cx="32" cy="32" r="6.3" stroke="#A9B8FF" stroke-opacity=".7" stroke-width=".6" filter="url(#glow)"/>
+  <circle cx="51.8" cy="14.1" r="1.7" fill="#C5D2FF"/>
+  <circle cx="11.3" cy="43.3" r="1.25" fill="#B7F7E4"/>
+</svg>
