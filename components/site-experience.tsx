@@ -152,6 +152,8 @@ export default function SiteExperience() {
     const y = (event.clientY - bounds.top - bounds.height / 2) / Math.max(1, bounds.height / 2);
     event.currentTarget.style.setProperty("--mag-x", `${(x * 5).toFixed(2)}px`);
     event.currentTarget.style.setProperty("--mag-y", `${(y * 4).toFixed(2)}px`);
+    event.currentTarget.style.setProperty("--mag-light-x", `${((event.clientX - bounds.left) / Math.max(1, bounds.width)) * 100}%`);
+    event.currentTarget.style.setProperty("--mag-light-y", `${((event.clientY - bounds.top) / Math.max(1, bounds.height)) * 100}%`);
   }
 
   function resetMagnetic(event: ReactPointerEvent<HTMLAnchorElement>) {
