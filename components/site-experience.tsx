@@ -235,7 +235,7 @@ export default function SiteExperience() {
             <div className="section-heading"><span><i>02</i> / THE POINT OF VIEW</span><span className="section-heading-right">A DIFFERENT SCALE OF THINKING</span></div>
             <div className="vision-main">
               <p className="micro-label">THINK IN UNIVERSES.</p>
-              <div><h2>Don’t just add<br />to the noise. <span>Change the signal.</span></h2><p className="section-copy">The most interesting questions are rarely the small ones. We are exploring how software can become more capable, more intuitive, and more human — while staying grounded in things that are genuinely useful.</p><p className="section-copy">The aim is not spectacle for its own sake. It is to make the extraordinary useful, and to build with enough care that the technology gets out of the way.</p></div>
+              <div><h2>Don’t just add<br />to the noise. <span>Change the signal.</span></h2><p className="section-copy">The most interesting questions are rarely the small ones. We are exploring how software can become more capable, more intuitive, and more human — while staying grounded in things that are genuinely useful.</p><p className="section-copy">The aim is not spectacle alone. It is to make the extraordinary useful, and to build with enough care that the technology gets out of the way.</p></div>
             </div>
             <div className="vision-principles">
               <article className="principle"><div className="principle-top"><span>01 / CURIOSITY</span><b>↗</b></div><h3>Ask the bigger question.</h3><p>Look beyond what exists. Imagine what should exist, then work backward with discipline.</p><div className="principle-mark principle-mark--orbit"><i /><b /><em /></div></article>
