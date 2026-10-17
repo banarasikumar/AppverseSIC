@@ -44,39 +44,49 @@ function hashAddress(address: string): string {
 
 async function checkRateLimit(request: Request): Promise<{ allowed: boolean; retryAfter: number }> {
   const addressHash = hashAddress(getClientAddress(request));
-  const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.replace(/\/+$/, "");
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.replace(/\\/+$/, "");
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
+  // Shared limiting is best-effort. An optional Redis outage must not disable the contact form.
   if (redisUrl && redisToken) {
-    const script = [
-      "local hits = redis.call('INCR', KEYS[1])",
-      "if hits == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end",
-      "return {hits, redis.call('TTL', KEYS[1])}"
-    ].join("\n");
+    try {
+      const script = [
+        "local hits = redis.call('INCR', KEYS[1])",
+        "if hits == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end",
+        "return {hits, redis.call('TTL', KEYS[1])}"
+      ].join("\\n");
 
-    const response = await fetch(redisUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${redisToken}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(["EVAL", script, "1", `appverse:contact:rate:${addressHash}`, String(WINDOW_SECONDS)]),
-      cache: "no-store"
-    });
+      const response = await fetch(redisUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${redisToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(["EVAL", script, "1", `appverse:contact:rate:${addressHash}`, String(WINDOW_SECONDS)]),
+        cache: "no-store",
+        signal: AbortSignal.timeout(3500)
+      });
 
-    if (!response.ok) throw new Error("Distributed rate limiter unavailable");
-    const result = await response.json() as { result?: unknown; error?: string };
-    if (result.error || !Array.isArray(result.result) || result.result.length < 2) {
-      throw new Error("Distributed rate limiter returned an invalid response");
+      if (!response.ok) throw new Error(`Upstash HTTP ${response.status}`);
+      const result = await response.json() as { result?: unknown; error?: string };
+      if (result.error || !Array.isArray(result.result) || result.result.length < 2) {
+        throw new Error("Upstash returned an invalid rate-limit response");
+      }
+
+      const count = Number(result.result[0]);
+      const ttl = Math.max(1, Number(result.result[1]) || WINDOW_SECONDS);
+      if (!Number.isFinite(count)) throw new Error("Upstash returned an invalid count");
+      return { allowed: count <= RATE_LIMIT, retryAfter: ttl };
+    } catch (error) {
+      console.error("[AppverseSI contact] Shared rate limiter unavailable; using local fallback.", {
+        reason: error instanceof Error ? error.message : "Unknown Upstash error"
+      });
     }
-
-    const count = Number(result.result[0]);
-    const ttl = Math.max(1, Number(result.result[1]) || WINDOW_SECONDS);
-    if (!Number.isFinite(count)) throw new Error("Distributed rate limiter returned an invalid count");
-    return { allowed: count <= RATE_LIMIT, retryAfter: ttl };
+  } else if (redisUrl || redisToken) {
+    console.error("[AppverseSI contact] Only one Upstash variable is configured; using local rate limit.");
   }
 
-  // Best-effort fallback for small deployments without Redis. This is not a cross-instance limit.
+  // Best-effort fallback for deployments without working Redis. Not shared across serverless instances.
   const now = Date.now();
   if (now - (runtimeState.__appverseContactLastSweep ?? 0) > 60_000) {
     for (const [key, bucket] of localBuckets) {
@@ -159,11 +169,16 @@ export async function POST(request: Request) {
   if (!EMAIL_PATTERN.test(email)) return jsonError("Please enter a valid email address.", 400);
   if (message.length < 12) return jsonError("Please add a little more detail to your project enquiry.", 400);
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
-  const from = process.env.CONTACT_FROM_EMAIL;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const to = process.env.CONTACT_TO_EMAIL?.trim();
+  const from = process.env.CONTACT_FROM_EMAIL?.trim();
   if (!apiKey || !to || !from) {
-    return jsonError("Our enquiry form is not connected yet. Please try again later.", 503);
+    console.error("[AppverseSI contact] Email delivery is not configured.", {
+      hasResendKey: Boolean(apiKey),
+      hasRecipient: Boolean(to),
+      hasSender: Boolean(from)
+    });
+    return jsonError("The enquiry form is not connected yet. Please email us directly using the link below.", 503);
   }
 
   const emailText = [
@@ -192,14 +207,34 @@ export async function POST(request: Request) {
         subject: "AppverseSI project enquiry — " + name,
         text: emailText
       }),
-      cache: "no-store"
+      cache: "no-store",
+      signal: AbortSignal.timeout(12_000)
     });
 
     if (!response.ok) {
-      return jsonError("We couldn't send your enquiry right now. Please try again later.", 502);
+      const providerBody = (await response.text().catch(() => "")).slice(0, 1200);
+      const fromDomain = from.match(/@([^>\\s]+)/)?.[1] ?? "unparseable";
+      console.error("[AppverseSI contact] Resend rejected an enquiry.", {
+        status: response.status,
+        senderDomain: fromDomain,
+        providerRequestId: response.headers.get("x-resend-id"),
+        response: providerBody
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        return jsonError("Our email service rejected its credentials or sender permissions. Please email us directly using the link below.", 502);
+      }
+      if (response.status === 422) {
+        return jsonError("Our email service rejected the sender or message configuration. Please email us directly using the link below.", 502);
+      }
+      return jsonError("We couldn't send this through the form just now. Please email us directly using the link below.", 502);
     }
+
     return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
-  } catch {
-    return jsonError("We couldn't send your enquiry right now. Please try again later.", 502);
+  } catch (error) {
+    console.error("[AppverseSI contact] Email request failed before Resend confirmed delivery.", {
+      reason: error instanceof Error ? error.message : "Unknown network error"
+    });
+    return jsonError("We couldn't send this through the form just now. Please email us directly using the link below.", 502);
   }
 }
