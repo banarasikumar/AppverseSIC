@@ -122,7 +122,7 @@ export default function SiteExperience() {
       });
       const result = await response.json() as { ok?: boolean; error?: string };
       if (!response.ok || !result.ok) {
-        setFormState({ kind: "error", message: result.error || "We couldn't send your message. Please try again later." });
+        setFormState({ kind: "error", message: "We couldn’t send your enquiry right now. Please try again later." });
         return;
       }
       form.reset();
@@ -277,7 +277,14 @@ export default function SiteExperience() {
         <section className="contact section-pad" id="contact" data-reveal data-theme-color="#080d17" data-scene-accent="#a8b6ff">
           <div className="container">
             <div className="section-heading"><span><i>05</i> / BUSINESS ENQUIRIES</span><span className="section-heading-right">REQUEST A PROJECT</span></div>
-              <p className="contact-direct-email">If the form is unavailable, please try again later.</p>
+            <div className="contact-layout">
+              <div className="contact-copy">
+                <p className="micro-label">FOR WEBSITES, APPS & CUSTOM SOFTWARE</p>
+                <h2>What do you need<br /><span>built?</span></h2>
+                <p className="section-copy">Tell us what you need, what it should do, and who it is for. We review each project enquiry and respond when the work is a good fit.</p>
+                <div className="contact-signal"><span className="signal-orb"><i /></span><div><b>PROJECT ENQUIRIES</b><p>Websites, apps, and custom software.</p></div></div>
+                <p className="contact-direct-email">If the form is unavailable, please try again later.</p>
+              </div>
               <form className="contact-form" onSubmit={submitInquiry}>
                 <div className="form-heading"><span>INQUIRY / 001</span><span>FIELDS MARKED * ARE REQUIRED</span></div>
                 <div className="form-grid"><label>Your name <i>*</i><input name="name" autoComplete="name" placeholder="How should we address you?" required maxLength={100} /></label><label>Email address <i>*</i><input name="email" autoComplete="email" type="email" placeholder="you@company.com" required maxLength={254} /></label><label>Company <small>OPTIONAL</small><input name="company" autoComplete="organization" placeholder="Your organization" maxLength={120} /></label><label>Project type<select name="projectType" defaultValue=""><option value="" disabled>Choose a direction</option><option>Website / digital presence</option><option>Mobile app</option><option>Web application</option><option>Custom software</option><option>Product planning / discovery</option><option>App or platform concept</option><option>Something else</option></select></label></div>
