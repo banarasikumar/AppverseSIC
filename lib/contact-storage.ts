@@ -22,14 +22,15 @@ function getConfig() {
 
 async function storageRequest(path: string, init: RequestInit = {}) {
   const config = getConfig();
+  const headers = new Headers({
+    apikey: config.key,
+    Authorization: "Bearer " + config.key,
+    "Content-Type": "application/json"
+  });
+  new Headers(init.headers).forEach((value, name) => headers.set(name, value));
   const response = await fetch(config.url + "/rest/v1/contact_messages" + path, {
     ...init,
-    headers: {
-      apikey: config.key,
-      Authorization: "Bearer " + config.key,
-      "Content-Type": "application/json",
-      ...(init.headers || {})
-    },
+    headers,
     cache: "no-store",
     signal: AbortSignal.timeout(9000)
   });
