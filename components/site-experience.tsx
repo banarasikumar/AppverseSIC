@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent, type PointerEvent as ReactPointerEvent } from "react";
 import UniverseCanvas from "@/components/universe-canvas";
 
 type FormState = { kind: "idle" | "sending" | "success" | "error"; message?: string };
@@ -9,8 +9,49 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true" className={diagonal ? "arrow arrow--diagonal" : "arrow"}>{diagonal ? "↗" : "→"}</span>;
 }
 
-function Brand() {
-  return <a className="brand" href="#top" aria-label="AppverseSI home"><span className="brand-symbol"><i /><b /></span><span className="brand-word">APPVERSE<span>.</span>SI</span></a>;
+function Brand({ footer = false }: { footer?: boolean }) {
+  const markId = footer ? "appverse-mark-footer" : "appverse-mark-header";
+  return (
+    <a className="brand" href="#top" aria-label="AppverseSI home">
+      <span className="brand-symbol" aria-hidden="true">
+        <svg className="brand-symbol-art" viewBox="0 0 48 48" fill="none">
+          <defs>
+            <linearGradient id={`${markId}-rim`} x1="6" y1="7" x2="42" y2="41" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#F3F6FF" />
+              <stop offset=".42" stopColor="#9EADFF" />
+              <stop offset=".76" stopColor="#B7F7E4" />
+              <stop offset="1" stopColor="#7586DE" />
+            </linearGradient>
+            <radialGradient id={`${markId}-core`} cx="0" cy="0" r="1" gradientTransform="translate(19 16) rotate(58) scale(25)" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#B7C8FF" />
+              <stop offset=".32" stopColor="#39466F" />
+              <stop offset=".7" stopColor="#101421" />
+              <stop offset="1" stopColor="#03040A" />
+            </radialGradient>
+            <radialGradient id={`${markId}-light`} cx="0" cy="0" r="1" gradientTransform="translate(33 12) rotate(126) scale(26)" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#C3D2FF" stopOpacity=".9" />
+              <stop offset="1" stopColor="#8D9DFF" stopOpacity="0" />
+            </radialGradient>
+            <filter id={`${markId}-glow`} x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse">
+              <feGaussianBlur stdDeviation="1.2" />
+            </filter>
+          </defs>
+          <circle cx="24" cy="24" r="19.1" stroke={`url(#${markId}-rim)`} strokeOpacity=".42" strokeWidth=".7" />
+          <path d="M7.1 28.2C5.4 18.8 12.7 8.2 22.6 6.1C32.4 4 41.6 12.1 42 21.5" stroke={`url(#${markId}-rim)`} strokeWidth="1.55" strokeLinecap="round" />
+          <path d="M40.7 25.2C39.9 34.2 31.6 41.7 22.2 41.2C16.7 40.9 11.8 38 8.8 33.5" stroke={`url(#${markId}-rim)`} strokeWidth="2.2" strokeLinecap="round" />
+          <path d="M8.6 15.3C15.9 10.6 29.2 14.6 36.2 23.5C40.3 28.8 40.7 34.5 37.6 37.7" stroke="#B4C4FF" strokeOpacity=".63" strokeWidth=".8" />
+          <path d="M11.1 35.6C11.6 26.5 22.1 15.8 31.5 12.2C36.4 10.3 40 12 40.6 15.6" stroke="#9DF2DD" strokeOpacity=".62" strokeWidth=".85" />
+          <ellipse cx="24" cy="24" rx="9.1" ry="12.2" transform="rotate(39 24 24)" fill={`url(#${markId}-core)`} stroke={`url(#${markId}-rim)`} strokeWidth=".85" />
+          <ellipse cx="24" cy="24" rx="6.1" ry="8.4" transform="rotate(39 24 24)" fill={`url(#${markId}-light)`} opacity=".55" />
+          <circle cx="24" cy="24" r="4.15" fill="#03040A" stroke="#D7E2FF" strokeOpacity=".8" strokeWidth=".65" />
+          <circle cx="24" cy="24" r="5.1" stroke="#A9B8FF" strokeOpacity=".6" strokeWidth=".5" filter={`url(#${markId}-glow)`} />
+          <circle cx="39.1" cy="10.2" r="1.35" fill="#C5D2FF" />
+          <circle cx="8.1" cy="32.5" r=".95" fill="#B7F7E4" />
+        </svg>
+      </span>
+      <span className="brand-word">APPVERSE<span>.</span>SI</span>
+    </a>
+  );
 }
 
 export default function SiteExperience() {
@@ -92,6 +133,32 @@ export default function SiteExperience() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  function followPointer(event: ReactPointerEvent<HTMLElement>) {
+    if (event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--pointer-x", `${((event.clientX - bounds.left) / Math.max(1, bounds.width)) * 100}%`);
+    event.currentTarget.style.setProperty("--pointer-y", `${((event.clientY - bounds.top) / Math.max(1, bounds.height)) * 100}%`);
+  }
+
+  function resetPointer(event: ReactPointerEvent<HTMLElement>) {
+    event.currentTarget.style.removeProperty("--pointer-x");
+    event.currentTarget.style.removeProperty("--pointer-y");
+  }
+
+  function moveMagnetic(event: ReactPointerEvent<HTMLAnchorElement>) {
+    if (event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left - bounds.width / 2) / Math.max(1, bounds.width / 2);
+    const y = (event.clientY - bounds.top - bounds.height / 2) / Math.max(1, bounds.height / 2);
+    event.currentTarget.style.setProperty("--mag-x", `${(x * 5).toFixed(2)}px`);
+    event.currentTarget.style.setProperty("--mag-y", `${(y * 4).toFixed(2)}px`);
+  }
+
+  function resetMagnetic(event: ReactPointerEvent<HTMLAnchorElement>) {
+    event.currentTarget.style.setProperty("--mag-x", "0px");
+    event.currentTarget.style.setProperty("--mag-y", "0px");
+  }
+
   return (
     <div className="site-shell" id="top">
       <div className="world-backdrop" aria-hidden="true"><UniverseCanvas paused={scenePaused} /></div>
@@ -110,20 +177,19 @@ export default function SiteExperience() {
       </header>
 
       <main>
-        <section className="hero" id="home" data-theme-color="#05080b" data-scene-accent="#b7f6dc" aria-labelledby="hero-title">
+        <section className="hero" id="home" data-theme-color="#05080b" data-scene-accent="#b7f6dc" aria-labelledby="hero-title" onPointerMove={followPointer} onPointerLeave={resetPointer}>
           <div className="hero-atmosphere" aria-hidden="true" />
           <div className="hero-gridlines" aria-hidden="true" />
           <div className="container hero-content">
             <div className="hero-copy">
-              <p className="eyebrow"><span className="eyebrow-dot" /> APPVERSE SUPERINTELLIGENCE <i>/</i> AN EXPLORATION OF WHAT COMES NEXT</p>
-              <h1 id="hero-title">Our apps.<br />Our <em>universe.</em></h1>
-              <p className="hero-lede">Software built by us, for the world.</p>
-              <p className="hero-body">We develop and publish our own applications, with a long-term ambition to create more connected digital experiences. Businesses can also approach us to plan, design, and build digital products together.</p>
+              <p className="eyebrow"><span className="eyebrow-dot" /> APPVERSE SUPERINTELLIGENCE <i>/</i> BUILDING WHAT COMES NEXT</p>
+              <h1 id="hero-title">Tomorrow,<br />made <em>real.</em></h1>
+              <p className="hero-lede">A new universe of software, taking shape.</p>
+              <p className="hero-body">Ideas should do more than look good on a screen. We’re building useful apps and digital experiences for the world ahead.</p>
               <div className="hero-actions">
-                <a className="button button-solid" href="#products">Explore our apps <Arrow /></a>
-                <a className="hero-business-link" href="#contact">Building for a business? <span>Let’s work together <Arrow diagonal /></span></a>
+                <a className="button button-solid button-magnetic" href="#products" onPointerMove={moveMagnetic} onPointerLeave={resetMagnetic}>Explore what we’re building <Arrow /></a>
+                <a className="hero-business-link" href="#contact">Have something ambitious in mind? <span>Let’s build it together <Arrow diagonal /></span></a>
               </div>
-              <div className="hero-index"><span>APPVERSESI</span><i /> INDEPENDENT SOFTWARE, BUILT WITH INTENT</div>
             </div>
             <div className="scene-controls">
               <span>REAL-TIME 3D · SCROLL TO TRAVEL</span>
@@ -138,9 +204,9 @@ export default function SiteExperience() {
             <div className="section-heading"><span><i>01</i> / OUR PRODUCTS</span><span className="section-heading-right">BUILT IN-HOUSE · RELEASED WHEN READY</span></div>
             <div className="products-intro">
               <div><p className="micro-label">INDEPENDENT BY DESIGN</p><h2>Our own apps.<br /><span>Our next frontier.</span></h2></div>
-              <p className="section-copy">AppverseSI develops and publishes its own software. We’re working toward a portfolio of useful applications, with a longer-term ambition to create more connected, super-app experiences.</p>
+              <p className="section-copy">Useful by design. Unexpected in possibility. We’re shaping a growing universe of software — with a long view toward experiences that work better together.</p>
             </div>
-            <div className="product-shelf">
+            <div className="product-shelf" onPointerMove={followPointer} onPointerLeave={resetPointer}>
               <div className="product-stage-copy">
                 <span className="product-stage-index">APPVERSESI / IN-HOUSE</span>
                 <p>Made here.<br /><em>Released with purpose.</em></p>
@@ -149,10 +215,10 @@ export default function SiteExperience() {
               <div className="product-shelf-copy">
                 <p className="product-kicker"><span className="eyebrow-dot" /> PRODUCT PIPELINE / 001</p>
                 <h3>Built with intent.<br />Announced when ready.</h3>
-                <p>Our own apps are central to the AppverseSI vision, not just a portfolio of client work. We’re building toward that portfolio now; individual products will appear here when there’s something real and ready to share.</p>
+                <p>Every product starts with a simple question: can software make something meaningfully better? The work is underway. We’ll share each release when it’s ready to stand on its own.</p>
                 <div className="product-status">
                   <span className="status-pill"><i /> IN DEVELOPMENT</span>
-                  <span className="product-status-note">NO PUBLIC RELEASES ANNOUNCED</span>
+                  <span className="product-status-note">REVEALED WHEN READY</span>
                 </div>
                 <a className="product-build-link" href="#contact">Build with AppverseSI <Arrow diagonal /></a>
               </div>
@@ -222,7 +288,7 @@ export default function SiteExperience() {
         </section>
       </main>
 
-      <footer className="site-footer" data-theme-color="#05080b" data-scene-accent="#b7f6dc"><div className="container footer-main"><div className="footer-brand"><Brand /><p>A new universe of software.<br />A long view of intelligence.</p></div><div className="footer-links"><a href="#vision">Vision</a><a href="#frontier">The frontier</a><a href="#products">Our apps</a><a href="#studio">Studio</a><a href="#contact">Contact <Arrow diagonal /></a></div><a className="back-top" href="#top" aria-label="Back to top">↑</a></div><div className="container footer-legal"><span>© {new Date().getFullYear()} APPVERSE.SI</span><span>INDEPENDENT BY NATURE · FUTURE-FOCUSED BY DESIGN</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
+      <footer className="site-footer" data-theme-color="#05080b" data-scene-accent="#b7f6dc"><div className="container footer-main"><div className="footer-brand"><Brand footer /><p>A new universe of software.<br />A long view of intelligence.</p></div><div className="footer-links"><a href="#vision">Vision</a><a href="#frontier">The frontier</a><a href="#products">Our apps</a><a href="#studio">Studio</a><a href="#contact">Contact <Arrow diagonal /></a></div><a className="back-top" href="#top" aria-label="Back to top">↑</a></div><div className="container footer-legal"><span>© {new Date().getFullYear()} APPVERSE.SI</span><span>INDEPENDENT BY NATURE · FUTURE-FOCUSED BY DESIGN</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
     </div>
   );
 }
