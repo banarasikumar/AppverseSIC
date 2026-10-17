@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate:
@@ -20,37 +20,7 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
-      # Bootstrap the missing lockfile once. The generated lock is committed to main;
-      # subsequent builds use npm ci and never resolve a fresh dependency tree.
-      - name: Set up Node.js for lockfile bootstrap
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Generate package lockfile when missing
-        id: lockfile
-        shell: bash
-        run: |
-          if [ ! -f package-lock.json ]; then
-            npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-            echo "created=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "created=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Commit initial lockfile to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.lockfile.outputs.created == 'true'
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: add npm lockfile for reproducible builds"
-            git push origin HEAD:main
-          fi
-
-      - name: Set up Node.js with npm cache
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
