@@ -1465,3 +1465,33 @@ body {
   .product-shelf::before { transition: none !important; }
   .hero::before { transition: none !important; }
 }
+
+
+/* Clear, business-specific secondary CTA copy. */
+.hero-business-link .hero-business-kicker {
+  display: block;
+  color: rgba(208, 221, 244, .53);
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.hero-business-link > span:not(.hero-business-kicker) {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(240,244,255,.91);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hero-business-link:hover > span:not(.hero-business-kicker) { color: #fff; }
+.product-build-link {
+  gap: 8px;
+  font-size: 10px;
+}
+.contact-signal p { max-width: 260px; }
+@media (max-width: 760px) {
+  .hero-business-link .hero-business-kicker { font-size: 7px; }
+  .hero-business-link > span:not(.hero-business-kicker) { font-size: 12px; }
+}
