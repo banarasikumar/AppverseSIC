@@ -6,12 +6,12 @@ const siteUrl = "https://appverse.si";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "AppverseSI — A New Universe of Software", template: "%s — AppverseSI" },
-  description: "Appverse Superintelligence is building a new universe of intelligent software and digital experiences. Understand the universe. Build toward superintelligence.",
+  title: { default: "AppverseSI — Apps, Software & Product Engineering", template: "%s — AppverseSI" },
+  description: "AppverseSI develops and publishes its own apps and partners with businesses to plan, design, and build digital products. Independent applications today, ambitious connected experiences over time.",
   applicationName: "AppverseSI",
   alternates: { canonical: "/" },
-  openGraph: { type: "website", url: siteUrl, siteName: "AppverseSI", title: "AppverseSI — A New Universe of Software", description: "Understand the universe. Build toward superintelligence. The next generation of software is taking shape.", images: [{ url: "/opengraph-image.svg", alt: "AppverseSI — A New Universe of Software" }] },
-  twitter: { card: "summary_large_image", title: "AppverseSI — A New Universe of Software", description: "Understand the universe. Build toward superintelligence.", images: ["/opengraph-image.svg"] },
+  openGraph: { type: "website", url: siteUrl, siteName: "AppverseSI", title: "AppverseSI — Apps, Software & Product Engineering", description: "Independent applications and thoughtful digital products, built with businesses.", images: [{ url: "/opengraph-image.svg", alt: "AppverseSI — A New Universe of Software" }] },
+  twitter: { card: "summary_large_image", title: "AppverseSI — Apps, Software & Product Engineering", description: "AppverseSI builds its own apps and partners with businesses to create digital products.", images: ["/opengraph-image.svg"] },
   icons: { icon: "/icon.svg", shortcut: "/icon.svg" },
   robots: { index: true, follow: true }
 };
