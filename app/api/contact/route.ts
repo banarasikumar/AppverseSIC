@@ -44,7 +44,7 @@ function hashAddress(address: string): string {
 
 async function checkRateLimit(request: Request): Promise<{ allowed: boolean; retryAfter: number }> {
   const addressHash = hashAddress(getClientAddress(request));
-  const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.replace(/\\/+$/, "");
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.replace(/\/+$/, "");
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
   // Shared limiting is best-effort. An optional Redis outage must not disable the contact form.
@@ -54,7 +54,7 @@ async function checkRateLimit(request: Request): Promise<{ allowed: boolean; ret
         "local hits = redis.call('INCR', KEYS[1])",
         "if hits == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end",
         "return {hits, redis.call('TTL', KEYS[1])}"
-      ].join("\\n");
+      ].join("\n");
 
       const response = await fetch(redisUrl, {
         method: "POST",
@@ -213,7 +213,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const providerBody = (await response.text().catch(() => "")).slice(0, 1200);
-      const fromDomain = from.match(/@([^>\\s]+)/)?.[1] ?? "unparseable";
+      const fromDomain = from.match(/@([^>\s]+)/)?.[1] ?? "unparseable";
       console.error("[AppverseSI contact] Resend rejected an enquiry.", {
         status: response.status,
         senderDomain: fromDomain,
