@@ -153,6 +153,49 @@ const diskFragment = [
   "}"
 ].join("\n");
 
+const coronaVertex = [
+  "varying vec3 vNormalView;",
+  "varying vec3 vLocalPosition;",
+  "void main() {",
+  "  vNormalView = normalize(normalMatrix * normal);",
+  "  vLocalPosition = position;",
+  "  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);",
+  "  gl_Position = projectionMatrix * mvPosition;",
+  "}"
+].join("\\n");
+
+const coronaFragment = [
+  "precision highp float;",
+  "uniform float uTime;",
+  "uniform vec3 uTint;",
+  "varying vec3 vNormalView;",
+  "varying vec3 vLocalPosition;",
+  "float hash21(vec2 p) {",
+  "  p = fract(p * vec2(123.34, 456.21));",
+  "  p += dot(p, p + 45.32);",
+  "  return fract(p.x * p.y);",
+  "}",
+  "float noise21(vec2 p) {",
+  "  vec2 i = floor(p);",
+  "  vec2 f = fract(p);",
+  "  f = f * f * (3.0 - 2.0 * f);",
+  "  return mix(mix(hash21(i), hash21(i + vec2(1.0, 0.0)), f.x),",
+  "             mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), f.x), f.y);",
+  "}",
+  "void main() {",
+  "  float radius = length(vLocalPosition.xy);",
+  "  float angle = atan(vLocalPosition.y, vLocalPosition.x);",
+  "  float turbulence = noise21(vec2(angle * 3.4 + uTime * 0.09, radius * 3.2 - uTime * 0.14));",
+  "  float filaments = pow(max(0.0, sin(angle * 23.0 + radius * 8.0 + turbulence * 5.0 - uTime * 0.22)), 5.0);",
+  "  float band = exp(-pow((radius - 2.03) / 0.42, 2.0));",
+  "  float limb = pow(1.0 - clamp(abs(normalize(vNormalView).z), 0.0, 1.0), 1.8);",
+  "  float edgeFade = 1.0 - smoothstep(2.28, 2.72, radius);",
+  "  float intensity = (band * (0.26 + turbulence * 0.42 + filaments * 0.32) + limb * 0.12) * edgeFade;",
+  "  vec3 tint = mix(uTint, vec3(1.0, 0.68, 0.43), smoothstep(1.82, 2.34, radius) * 0.72);",
+  "  gl_FragColor = vec4(tint * intensity * 1.65, intensity * 0.34);",
+  "}"
+].join("\\n");
+
 export default function UniverseCanvas({ paused = false }: SceneProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(paused);
@@ -243,17 +286,34 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           scene!.add(system);
           focusTargets.push(system);
 
-          const haloGeometry = new THREE.SphereGeometry(2.2, 48, 40);
+          // A subtle outer envelope plus a turbulent, shader-driven corona gives the horizon real depth.
+          const haloGeometry = new THREE.SphereGeometry(2.65, 56, 48);
           const halo = new THREE.Mesh(haloGeometry, new THREE.MeshBasicMaterial({
             color: blueShift > 0.5 ? 0x425dff : 0xff9a60,
             transparent: true,
-            opacity: 0.085,
+            opacity: 0.035,
             side: THREE.BackSide,
             blending: THREE.AdditiveBlending,
             depthWrite: false,
             toneMapped: false
           }));
           system.add(halo);
+          const coronaMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+              uTime: { value: 0 },
+              uTint: { value: new THREE.Color(blueShift > 0.5 ? 0x647fff : 0xff8954) }
+            },
+            vertexShader: coronaVertex,
+            fragmentShader: coronaFragment,
+            transparent: true,
+            side: THREE.DoubleSide,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            toneMapped: false
+          });
+          const corona = new THREE.Mesh(new THREE.SphereGeometry(2.45, 64, 48), coronaMaterial);
+          corona.renderOrder = 1;
+          system.add(corona);
 
           const diskGeometry = new THREE.RingGeometry(1.88, 7.82, 320, 1);
           const diskMaterial = new THREE.ShaderMaterial({
@@ -360,11 +420,11 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           dust.rotation.copy(disk.rotation);
           system.add(dust);
 
-          return { system, diskMaterial, innerDiskMaterial: innerDisk.material as ThreeTypes.ShaderMaterial, photonRing, photonGlow, dust, horizon };
+          return { system, diskMaterial, innerDiskMaterial: innerDisk.material as ThreeTypes.ShaderMaterial, coronaMaterial, photonRing, photonGlow, dust, horizon };
         };
 
         // FIELD 01 — a black hole with a hot, turbulent accretion disk, photon ring and lens-warped stars.
-        const primary = createBlackHole(new THREE.Vector3(2.7, 0.15, 0), 0.0, 1.0);
+        const primary = createBlackHole(new THREE.Vector3(isCompact ? 1.05 : 4.1, 0.15, 0), 0.0, 1.0);
 
         // FIELD 02 — the throat of a wormhole: overlapping translucent rings in actual 3D space.
         const portal = new THREE.Group();
@@ -579,7 +639,7 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           elapsed += delta;
           const progress = scrollProgress;
           const ease = 1 - Math.exp(-delta * (reducedMotion ? 1.9 : 3.25));
-          const motion = reducedMotion ? 0.16 : 1;
+          const motion = reducedMotion ? 0 : 1;
 
           pointer.x += (pointer.tx - pointer.x) * Math.min(1, delta * 4.6);
           pointer.y += (pointer.ty - pointer.y) * Math.min(1, delta * 4.6);
@@ -608,8 +668,9 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           }
 
           primary.system.rotation.y = elapsed * 0.025 * motion + pointer.x * 0.02;
-          primary.diskMaterial.uniforms.uTime.value = elapsed;
-          primary.innerDiskMaterial.uniforms.uTime.value = elapsed * 1.12;
+          primary.diskMaterial.uniforms.uTime.value = elapsed * motion;
+          primary.innerDiskMaterial.uniforms.uTime.value = elapsed * 1.12 * motion;
+          primary.coronaMaterial.uniforms.uTime.value = elapsed * motion;
           primary.photonRing.rotation.z += delta * 0.035 * motion;
           primary.photonGlow.rotation.z -= delta * 0.027 * motion;
           primary.dust.rotation.y = -elapsed * 0.018 * motion;
@@ -637,8 +698,9 @@ export default function UniverseCanvas({ paused = false }: SceneProps) {
           architectureRings[2].rotation.y += delta * 0.052 * motion;
 
           secondary.system.rotation.y = -elapsed * 0.022 * motion + pointer.x * 0.02;
-          secondary.diskMaterial.uniforms.uTime.value = elapsed * 0.85;
-          secondary.innerDiskMaterial.uniforms.uTime.value = elapsed * 0.93;
+          secondary.diskMaterial.uniforms.uTime.value = elapsed * 0.85 * motion;
+          secondary.innerDiskMaterial.uniforms.uTime.value = elapsed * 0.93 * motion;
+          secondary.coronaMaterial.uniforms.uTime.value = elapsed * 0.82 * motion;
           secondary.photonRing.rotation.z -= delta * 0.028 * motion;
           secondary.photonGlow.rotation.z += delta * 0.019 * motion;
           secondary.dust.rotation.y = elapsed * 0.018 * motion;
