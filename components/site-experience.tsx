@@ -213,7 +213,7 @@ export default function SiteExperience() {
               <div className="product-stage-copy">
                 <span className="product-stage-index">APPVERSESI / IN-HOUSE</span>
                 <p>Made here.<br /><em>Released with purpose.</em></p>
-                <span className="product-stage-caption">OUR PRODUCTS COME FIRST</span>
+                <span className="product-stage-caption">BUILT WITH INTENT · RELEASED WHEN READY</span>
               </div>
               <div className="product-shelf-copy">
                 <p className="product-kicker"><span className="eyebrow-dot" /> PRODUCT PIPELINE / 001</p>
