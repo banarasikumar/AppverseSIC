@@ -1,14 +1,14 @@
 # AppverseSI — Apps, Software & Product Engineering
 
-AppverseSI (Appverse Superintelligence) is an independent software business with two connected goals: develop and publish its own applications, and partner with businesses to plan, design, and build digital products. The long-term product vision includes more integrated experiences and, over time, ambitious super-apps.
+AppverseSI (Appverse Superintelligence) is an independent software business whose own apps and software products lead the story. It also welcomes business enquiries from teams who want a partner to plan, design, and build digital products. The long-term product vision includes more integrated experiences and, over time, ambitious super-apps.
 
 The public product shelf is intentionally honest: it does not list unreleased product names, fabricated screenshots, customer logos, testimonials, or launch dates. Add products and case studies only when their details are verified and ready to publish.
 
 ## Stack
 
 - Next.js App Router, React, and TypeScript.
-- Three.js/WebGL, dynamically loaded on the client for the immersive universe experience.
-- Responsive, dark editorial interface with semantic DOM content, keyboard-operable navigation, reduced-motion support, and a WebGL fallback.
+- Three.js/WebGL, dynamically loaded on the client for a scroll-driven 3D universe: shader-rendered interstellar dust, gravitational-lensing-style sky distortion, a black-hole event horizon, turbulent accretion disk, shader-driven corona, depth particles, a wormhole-like formation, and neural-constellation geometry.
+- Responsive, dark editorial interface with the own-products section immediately following the hero, an apps-first primary CTA, a lower-priority business collaboration link, semantic DOM content, keyboard-operable navigation, reduced-motion support, and a WebGL fallback.
 - Server-side inquiry endpoint at `app/api/contact/route.ts`, integrated with Resend when configured.
 
 The 3D renderer uses the browser's display-synchronized animation loop without a fixed 60 FPS cap. It does not force a monitor to run at 120 Hz and cannot guarantee a specific frame rate on every device.
