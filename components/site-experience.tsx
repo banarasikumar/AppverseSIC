@@ -126,7 +126,7 @@ export default function SiteExperience() {
         return;
       }
       form.reset();
-      setFormState({ kind: "success", message: "Enquiry sent. We’ll review your project and respond if it’s a fit." });
+      setFormState({ kind: "success", message: "Enquiry received and saved. We’ll review your project and respond if it’s a fit." });
     } catch {
       setFormState({ kind: "error", message: "We couldn't connect just now. Please try again." });
     }
