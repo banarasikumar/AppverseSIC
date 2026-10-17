@@ -206,7 +206,7 @@ export default function SiteExperience() {
           <div className="container">
             <div className="section-heading"><span><i>01</i> / OUR PRODUCTS</span><span className="section-heading-right">BUILT IN-HOUSE · RELEASED WHEN READY</span></div>
             <div className="products-intro">
-              <div><p className="micro-label">INDEPENDENT BY DESIGN</p><h2>Our own apps.<br /><span>Our next frontier.</span></h2></div>
+              <div><p className="micro-label">INDEPENDENT BY DESIGN</p><h2>Useful by design.<br /><span>Built for what’s next.</span></h2></div>
               <p className="section-copy">A growing portfolio of useful apps is the focus now. Over time, we want our products to work together more naturally, opening the door to richer digital experiences.</p>
             </div>
             <div className="product-shelf" onPointerMove={followPointer} onPointerLeave={resetPointer}>
