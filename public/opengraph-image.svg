@@ -1,1 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><radialGradient id="bg"><stop stop-color="#183a2c"/><stop offset="1" stop-color="#080b0c"/></radialGradient><radialGradient id="sphere" cx="30%" cy="25%"><stop stop-color="#e1fff0"/><stop offset=".2" stop-color="#8bd6b1"/><stop offset=".6" stop-color="#317e61"/><stop offset="1" stop-color="#07110e"/></radialGradient></defs><rect width="1200" height="630" fill="url(#bg)"/><g fill="none" stroke="#b4f0d3" stroke-opacity=".5"><ellipse cx="865" cy="315" rx="245" ry="94" transform="rotate(35 865 315)"/><ellipse cx="865" cy="315" rx="245" ry="135" transform="rotate(-53 865 315)"/><ellipse cx="865" cy="315" rx="190" ry="240" transform="rotate(55 865 315)"/><circle cx="865" cy="315" r="170" stroke-opacity=".15"/><circle cx="865" cy="315" r="125" stroke-opacity=".12"/></g><circle cx="865" cy="315" r="66" fill="url(#sphere)"/><g fill="#b4f0d3"><circle cx="710" cy="175" r="5"/><circle cx="1080" cy="340" r="4"/><circle cx="805" cy="520" r="3"/></g><text x="84" y="100" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="6" fill="#f0f3ee">APPVERSE<tspan fill="#b4f0d3">.</tspan>SI</text><text x="84" y="286" font-family="Arial,sans-serif" font-size="62" font-weight="600" letter-spacing="-2" fill="#f0f3ee">A new universe</text><text x="84" y="356" font-family="Arial,sans-serif" font-size="62" font-weight="600" letter-spacing="-2" fill="#b4f0d3">of software.</text><text x="86" y="415" font-family="Arial,sans-serif" font-size="19" fill="#aab5ad">Understand the universe. Build toward superintelligence.</text><text x="86" y="560" font-family="monospace" font-size="12" letter-spacing="3" fill="#829087">INDEPENDENT BY NATURE. FUTURE-FOCUSED BY DESIGN.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="space" cx="74%" cy="52%" r="78%">
+      <stop stop-color="#10152B"/>
+      <stop offset=".52" stop-color="#060812"/>
+      <stop offset="1" stop-color="#020307"/>
+    </radialGradient>
+    <radialGradient id="disk" cx="54%" cy="46%" r="53%">
+      <stop offset="0" stop-color="#03040A"/>
+      <stop offset=".34" stop-color="#03040A"/>
+      <stop offset=".43" stop-color="#15182D"/>
+      <stop offset=".49" stop-color="#C7D7FF"/>
+      <stop offset=".53" stop-color="#FFB36B"/>
+      <stop offset=".63" stop-color="#F15D22"/>
+      <stop offset=".77" stop-color="#4338D7" stop-opacity=".72"/>
+      <stop offset="1" stop-color="#090A19" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop stop-color="#6E82FF" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#6E82FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="word" x1="95" y1="265" x2="700" y2="425" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset=".62" stop-color="#DFE6FF"/>
+      <stop offset="1" stop-color="#AEBEFF"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="7" y1="7" x2="42" y2="41" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3F6FF"/>
+      <stop offset=".42" stop-color="#9EADFF"/>
+      <stop offset=".76" stop-color="#B7F7E4"/>
+      <stop offset="1" stop-color="#7586DE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#space)"/>
+  <circle cx="910" cy="320" r="355" fill="url(#glow)"/>
+  <g fill="#DCE5FF">
+    <circle cx="680" cy="92" r="1.4" opacity=".6"/><circle cx="745" cy="180" r="1.2" opacity=".45"/>
+    <circle cx="1120" cy="105" r="1.6" opacity=".7"/><circle cx="1084" cy="480" r="1.2" opacity=".55"/>
+    <circle cx="810" cy="550" r="1.4" opacity=".45"/><circle cx="1160" cy="355" r="1.1" opacity=".7"/>
+    <circle cx="660" cy="455" r="1.2" opacity=".4"/><circle cx="980" cy="72" r="1.1" opacity=".55"/>
+    <circle cx="590" cy="153" r="1.3" opacity=".35"/><circle cx="1040" cy="570" r="1.3" opacity=".5"/>
+    <circle cx="760" cy="390" r="1" opacity=".45"/><circle cx="1150" cy="210" r="1.1" opacity=".5"/>
+  </g>
+  <g transform="translate(795 314) rotate(-19)">
+    <ellipse rx="350" ry="173" fill="url(#disk)" opacity=".96"/>
+    <ellipse rx="257" ry="108" fill="none" stroke="#5D6DFF" stroke-opacity=".38" stroke-width="22"/>
+    <ellipse rx="228" ry="92" fill="none" stroke="#FF7040" stroke-opacity=".67" stroke-width="17"/>
+    <ellipse rx="200" ry="76" fill="none" stroke="#FFD7A5" stroke-opacity=".85" stroke-width="5"/>
+    <ellipse rx="168" ry="60" fill="#020307"/>
+    <ellipse rx="176" ry="65" fill="none" stroke="#C7D7FF" stroke-opacity=".86" stroke-width="3"/>
+    <path d="M-330 20C-245 70 -190 105 -95 117C5 130 120 113 245 52" fill="none" stroke="#F27B49" stroke-opacity=".55" stroke-width="3"/>
+    <path d="M-306 -37C-215 -76 -120 -87 -22 -74C77 -60 160 -38 279 -3" fill="none" stroke="#8397FF" stroke-opacity=".55" stroke-width="2"/>
+  </g>
+  <rect width="1200" height="630" fill="url(#space)" opacity=".12"/>
+  <g transform="translate(78 72)">
+    <circle cx="23" cy="23" r="19.1" stroke="url(#rim)" stroke-opacity=".42" stroke-width=".7"/>
+    <path d="M6.1 27.2C4.4 17.8 11.7 7.2 21.6 5.1C31.4 3 40.6 11.1 41 20.5" stroke="url(#rim)" stroke-width="1.55" stroke-linecap="round"/>
+    <path d="M39.7 24.2C38.9 33.2 30.6 40.7 21.2 40.2C15.7 39.9 10.8 37 7.8 32.5" stroke="url(#rim)" stroke-width="2.2" stroke-linecap="round"/>
+    <ellipse cx="23" cy="23" rx="9.1" ry="12.2" transform="rotate(39 23 23)" fill="#0D1222" stroke="url(#rim)" stroke-width=".85"/>
+    <circle cx="23" cy="23" r="4.15" fill="#03040A" stroke="#D7E2FF" stroke-opacity=".8" stroke-width=".65"/>
+    <text x="57" y="29" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" letter-spacing="4.2" fill="#F0F3FF">APPVERSE<tspan fill="#B7C6FF">.</tspan>SI</text>
+  </g>
+  <text x="80" y="272" font-family="Arial,Helvetica,sans-serif" font-size="75" font-weight="500" letter-spacing="-4.5" fill="url(#word)">Tomorrow,</text>
+  <text x="80" y="354" font-family="Arial,Helvetica,sans-serif" font-size="75" font-weight="500" letter-spacing="-4.5" fill="url(#word)">made real.</text>
+  <text x="84" y="411" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#B5BED8">Apps for today. A bigger vision for tomorrow.</text>
+  <path d="M84 469H170" stroke="#B5C5FF" stroke-width="2"/>
+  <text x="84" y="507" font-family="monospace" font-size="13" letter-spacing="2.8" fill="#8793B3">INDEPENDENT SOFTWARE · FUTURE-FOCUSED</text>
+</svg>
