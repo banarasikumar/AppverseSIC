@@ -194,6 +194,36 @@ export default function SiteExperience() {
                 <a className="hero-business-link" href="#contact"><span className="hero-business-kicker">FOR BUSINESSES</span><span>Request a project <Arrow diagonal /></span></a>
               </div>
             </div>
+            <div className="hero-visual" aria-hidden="true">
+              <div className="hero-visual-topline">
+                <span>APPVERSE / A LONG VIEW</span>
+                <span className="hero-visual-live"><i /> REAL-TIME ENVIRONMENT</span>
+              </div>
+              <div className="hero-visual-field">
+                <div className="hero-visual-orbit hero-visual-orbit--outer" />
+                <div className="hero-visual-orbit hero-visual-orbit--middle" />
+                <div className="hero-visual-orbit hero-visual-orbit--inner" />
+                <div className="hero-visual-core"><span /></div>
+                <i className="hero-visual-star hero-visual-star--one" />
+                <i className="hero-visual-star hero-visual-star--two" />
+                <i className="hero-visual-star hero-visual-star--three" />
+                <div className="hero-visual-float hero-visual-float--left">
+                  <span>01 / NOW</span>
+                  <strong>Useful apps</strong>
+                  <small>Made for real life</small>
+                </div>
+                <div className="hero-visual-float hero-visual-float--right">
+                  <span>02 / OVER TIME</span>
+                  <strong>Connected<br />experiences</strong>
+                  <small>A wider possibility</small>
+                </div>
+              </div>
+              <div className="hero-visual-foot">
+                <span className="hero-visual-foot-mark">✳</span>
+                <span>BIG THINKING.<br /><b>USEFUL SOFTWARE.</b></span>
+                <span className="hero-visual-foot-coord">APPVERSESI<br />IN FORMATION</span>
+              </div>
+            </div>
             <div className="scene-controls">
               <span>REAL-TIME 3D · SCROLL TO TRAVEL</span>
               <button className="scene-toggle" type="button" onClick={() => setScenePaused(!scenePaused)} aria-pressed={scenePaused} aria-label={scenePaused ? "Resume 3D scene animation" : "Pause 3D scene animation"}><span aria-hidden="true">{scenePaused ? "▶" : "Ⅱ"}</span>{scenePaused ? "Resume scene" : "Pause scene"}</button>
