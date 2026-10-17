@@ -32,7 +32,7 @@ export default function AdminDashboardPage() {
     try {
       const response = await fetch("/api/admin/messages", { cache: "no-store" });
       if (response.status === 401) {
-        window.location.assign("/admin/login");
+        window.location.assign("/login");
         return;
       }
       const result = await response.json() as { messages?: ContactMessage[]; error?: string };
@@ -83,7 +83,7 @@ export default function AdminDashboardPage() {
         body: JSON.stringify({ status })
       });
       if (response.status === 401) {
-        window.location.assign("/admin/login");
+        window.location.assign("/login");
         return;
       }
       if (!response.ok) {
@@ -103,7 +103,7 @@ export default function AdminDashboardPage() {
     try {
       await fetch("/api/admin/logout", { method: "POST" });
     } finally {
-      window.location.assign("/admin/login");
+      window.location.assign("/login");
     }
   }
 
